@@ -1,0 +1,11 @@
+# Changelog
+
+## 1.0.0 (2025-09-22)
+
+Full Changelog: [v0.0.1...v1.0.0](https://github.com/SportsGameOdds/sports-odds-api-python/compare/v0.0.1...v1.0.0)
+
+### Chores
+
+* configure new SDK language ([2b0a24a](https://github.com/SportsGameOdds/sports-odds-api-python/commit/2b0a24a4c2ab45ac111edf93e70a3adb8781074d))
+* update SDK settings ([1d5c8cb](https://github.com/SportsGameOdds/sports-odds-api-python/commit/1d5c8cbed9cdcb6f3c34a4b58afb83b6ca746781))
+* update SDK settings ([77a5692](https://github.com/SportsGameOdds/sports-odds-api-python/commit/77a56927b45e9a3a2567bd22d76d4092a9c0effa))

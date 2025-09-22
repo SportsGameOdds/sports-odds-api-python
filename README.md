@@ -1,27 +1,37 @@
-# Sports Game Odds Python API library
+# Sports Odds API - Live Sports Data & Sportsbook Betting Odds - Powered by SportsGameOdds Python API Library
 
-<!-- prettier-ignore -->
-[![PyPI version](https://img.shields.io/pypi/v/sports_odds_api.svg?label=pypi%20(stable))](https://pypi.org/project/sports_odds_api/)
+Get live betting odds, spreads, and totals for NFL, NBA, MLB, and 50 additional sports and leagues. Production-ready Python SDK with WebSocket support, 99.9% uptime, and sub-minute updates during live games. Perfect for developers building sportsbook platforms, odds comparison tools, positive EV models, and anything else that requires fast, accurate sports data.
 
-The Sports Game Odds Python library provides convenient access to the Sports Game Odds REST API from any Python 3.8+
-application. The library includes type definitions for all request params and response fields,
-and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
+[![PyPI version](https://img.shields.io/pypi/v/sports-odds-api.svg?label=pypi%20(stable))](https://pypi.org/project/sports-odds-api/)
 
-It is generated with [Stainless](https://www.stainless.com/).
-
-## Documentation
+This library provides convenient access to the Sports Game Odds REST API from Python 3.8+ applications.
 
 The REST API documentation can be found on [sportsgameodds.com](https://sportsgameodds.com/docs/). The full API of this library can be found in [api.md](api.md).
+
+## Features
+
+**For developers building the next generation of sports stats and/or betting applications:**
+
+- 📈 **3k+ odds markets** including moneylines, spreads, over/unders, team props, player props & more
+- 🏈 **50+ leagues covered** including NFL, NBA, MLB, NHL, NCAAF, NCAAB, EPL, UCL, UFC, PGA, ATP & more
+- 📊 **80+ sportsbooks** with unified odds formats, alt lines & deeplinks
+- 📺 **Live scores & stats** coverage on all games, teams, and players
+- ⚡ **Sub-100ms response times** and sub-minute updates for fast data
+- 🔧 **Typed requests & responses** via Pydantic models
+- 💰 **Developer-friendly pricing** with a generous free tier
+- ⏱️ **5-minute setup** with copy-paste examples
 
 ## Installation
 
 ```sh
-# install from this staging repo
-pip install git+ssh://git@github.com/stainless-sdks/sports-odds-api-python.git
+pip install sports-odds-api
 ```
 
-> [!NOTE]
-> Once this package is [published to PyPI](https://www.stainless.com/docs/guides/publish), this will become: `pip install sports_odds_api`
+## Obtain an API Key
+
+Get a free API key from [sportsgameodds.com](https://sportsgameodds.com/pricing).
+
+Unlike enterprise-only solutions, the Sports Game Odds API offers a developer-friendly experience, transparent pricing, comprehensive documentation, and a generous free tier.
 
 ## Usage
 
@@ -32,165 +42,103 @@ import os
 from sports_odds_api import SportsGameOdds
 
 client = SportsGameOdds(
-    api_key_param=os.environ.get(
-        "SPORTS_ODDS_API_KEY_HEADER"
-    ),  # This is the default and can be omitted
+    api_key_param=os.environ.get("SPORTS_ODDS_API_KEY_HEADER"),  # default, can be omitted
 )
 
 page = client.events.get()
-print(page.data)
+event = page.data[0]
+
+print(event.activity)
 ```
 
-While you can provide a `api_key_header` keyword argument,
-we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
-to add `SPORTS_ODDS_API_KEY_HEADER="My API Key Header"` to your `.env` file
-so that your API Key Header is not stored in source control.
+# Real-Time Event Streaming API
 
-## Async usage
+This API endpoint is only available to **AllStar** and **custom plan** subscribers. It is not included with basic subscription tiers. [Contact support](mailto:api@sportsgameodds.com) to get access.
 
-Simply import `AsyncSportsGameOdds` instead of `SportsGameOdds` and use `await` with each API call:
+This streaming API is currently in **beta**. API call patterns, response formats, and functionality may change. Fully managed streaming via SDK may be available in future releases.
+
+Our Streaming API provides real-time updates for Event objects through WebSocket connections. Instead of polling our REST endpoints, you can maintain a persistent connection to receive instant notifications when events change. This is ideal for applications that need immediate updates with minimal delay.
+
+We use [Pusher Protocol](https://pusher.com/docs/channels/library_auth_reference/pusher-websockets-protocol/) for WebSocket communication. While you can connect using any WebSocket library, we strongly recommend using any [Pusher Client Library](https://pusher.com/docs/channels/library_auth_reference/pusher-client-libraries) (ex: [Python](https://github.com/pusher/pusher-http-python))
+
+## How It Works
+
+The streaming process involves two steps:
+
+1. **Get Connection Details**: Make a request using `client.stream.events()` to receive:
+    - WebSocket authentication credentials
+    - WebSocket URL/channel info
+    - Initial snapshot of current data
+
+2. **Connect and Stream**: Use the provided details to connect via Pusher (or another WebSocket library) and receive real-time `eventID` notifications for changed events
+
+Your API key will have limits on concurrent streams.
+
+## Available Feeds
+
+Subscribe to different feeds using the `feed` query parameter:
+
+| Feed              | Description                                                                 | Required Parameters |
+| ----------------- | --------------------------------------------------------------------------- | ------------------- |
+| `events:live`     | All events currently in progress (started but not finished)                | None                |
+| `events:upcoming` | Upcoming events with available odds for a specific league                  | `leagueID`          |
+| `events:byid`     | Updates for a single specific event                                         | `eventID`           |
+
+The number of supported feeds will increase over time. Please reach out if you have a use case which can't be covered by these feeds.
+
+## Quick Start Example
+
+Here's the minimal code to connect to live events:
 
 ```python
 import os
-import asyncio
-from sports_odds_api import AsyncSportsGameOdds
+import pusher
 
-client = AsyncSportsGameOdds(
-    api_key_param=os.environ.get(
-        "SPORTS_ODDS_API_KEY_HEADER"
-    ),  # This is the default and can be omitted
-)
-
-
-async def main() -> None:
-    page = await client.events.get()
-    print(page.data)
-
-
-asyncio.run(main())
-```
-
-Functionality between the synchronous and asynchronous clients is otherwise identical.
-
-### With aiohttp
-
-By default, the async client uses `httpx` for HTTP requests. However, for improved concurrency performance you may also use `aiohttp` as the HTTP backend.
-
-You can enable this by installing `aiohttp`:
-
-```sh
-# install from this staging repo
-pip install 'sports_odds_api[aiohttp] @ git+ssh://git@github.com/stainless-sdks/sports-odds-api-python.git'
-```
-
-Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
-
-```python
-import asyncio
-from sports_odds_api import DefaultAioHttpClient
-from sports_odds_api import AsyncSportsGameOdds
-
-
-async def main() -> None:
-    async with AsyncSportsGameOdds(
-        api_key_param="My API Key Param",
-        http_client=DefaultAioHttpClient(),
-    ) as client:
-        page = await client.events.get()
-        print(page.data)
-
-
-asyncio.run(main())
-```
-
-## Using types
-
-Nested request parameters are [TypedDicts](https://docs.python.org/3/library/typing.html#typing.TypedDict). Responses are [Pydantic models](https://docs.pydantic.dev) which also provide helper methods for things like:
-
-- Serializing back into JSON, `model.to_json()`
-- Converting to a dictionary, `model.to_dict()`
-
-Typed requests and responses provide autocomplete and documentation within your editor. If you would like to see type errors in VS Code to help catch bugs earlier, set `python.analysis.typeCheckingMode` to `basic`.
-
-## Pagination
-
-List methods in the Sports Game Odds API are paginated.
-
-This library provides auto-paginating iterators with each list response, so you do not have to request successive pages manually:
-
-```python
 from sports_odds_api import SportsGameOdds
 
-client = SportsGameOdds()
+STREAM_FEED = "events:live"  # ex: events:upcoming, events:byid, events:live
+API_KEY = os.environ.get("SPORTS_ODDS_API_KEY_HEADER")
+client = SportsGameOdds(api_key_param=API_KEY)
 
-all_events = []
-# Automatically fetches more pages as needed.
-for event in client.events.get(
-    limit=30,
-):
-    # Do something with event here
-    all_events.append(event)
-print(all_events)
-```
+# Initialize a data structure where we'll save the event data
+EVENTS = {}
 
-Or, asynchronously:
+# Call this endpoint to get initial data and connection parameters
+stream_info = client.stream.events(feed=STREAM_FEED)
 
-```python
-import asyncio
-from sports_odds_api import AsyncSportsGameOdds
+# Seed initial data
+for event in stream_info.data:
+    EVENTS[event.eventID] = event
 
-client = AsyncSportsGameOdds()
-
-
-async def main() -> None:
-    all_events = []
-    # Iterate through items across all pages, issuing requests as needed.
-    async for event in client.events.get(
-        limit=30,
-    ):
-        all_events.append(event)
-    print(all_events)
-
-
-asyncio.run(main())
-```
-
-Alternatively, you can use the `.has_next_page()`, `.next_page_info()`, or `.get_next_page()` methods for more granular control working with pages:
-
-```python
-first_page = await client.events.get(
-    limit=30,
-)
-if first_page.has_next_page():
-    print(f"will fetch next page using these details: {first_page.next_page_info()}")
-    next_page = await first_page.get_next_page()
-    print(f"number of items we just fetched: {len(next_page.data)}")
-
-# Remove `await` for non-async usage.
-```
-
-Or just work directly with the returned data:
-
-```python
-first_page = await client.events.get(
-    limit=30,
+# Connect to WebSocket server
+pusher_client = pusher.Pusher(
+    app_id=stream_info.pusherKey,
+    **stream_info.pusherOptions,
 )
 
-print(f"next page cursor: {first_page.next_cursor}")  # => "next page cursor: ..."
-for event in first_page.data:
-    print(event.activity)
+channel = pusher_client.subscribe(stream_info.channel)
 
-# Remove `await` for non-async usage.
+def handle_event(changed_events):
+    event_ids = ",".join([e["eventID"] for e in changed_events])
+    for event in client.events.getEvents(eventIDs=event_ids):
+        EVENTS[event.eventID] = event
+
+channel.bind("data", handle_event)
 ```
+
+### Request & Response types
+
+This library includes Python type hints for all request params and response fields.  
+Responses are returned as Pydantic models, giving you:
+
+- Autocomplete and inline docs in your IDE
+- Helper methods like `.to_dict()` and `.to_json()`
 
 ## Handling errors
 
-When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `sports_odds_api.APIConnectionError` is raised.
-
-When the API returns a non-success status code (that is, 4xx or 5xx
-response), a subclass of `sports_odds_api.APIStatusError` is raised, containing `status_code` and `response` properties.
-
-All errors inherit from `sports_odds_api.APIError`.
+When the library is unable to connect to the API,
+or if the API returns a non-success status code (i.e., 4xx or 5xx response),
+a subclass of `sports_odds_api.APIError` will be raised:
 
 ```python
 import sports_odds_api
@@ -202,13 +150,10 @@ try:
     client.events.get()
 except sports_odds_api.APIConnectionError as e:
     print("The server could not be reached")
-    print(e.__cause__)  # an underlying Exception, likely raised within httpx.
-except sports_odds_api.RateLimitError as e:
+except sports_odds_api.RateLimitError:
     print("A 429 status code was received; we should back off a bit.")
 except sports_odds_api.APIStatusError as e:
-    print("Another non-200-range status code was received")
-    print(e.status_code)
-    print(e.response)
+    print("Non-200 response:", e.status_code)
 ```
 
 Error codes are as follows:
@@ -226,125 +171,97 @@ Error codes are as follows:
 
 ### Retries
 
-Certain errors are automatically retried 2 times by default, with a short exponential backoff.
-Connection errors (for example, due to a network connectivity problem), 408 Request Timeout, 409 Conflict,
-429 Rate Limit, and >=500 Internal errors are all retried by default.
-
-You can use the `max_retries` option to configure or disable retry settings:
+Certain errors are automatically retried 2 times by default, with exponential backoff.  
+You can configure retries using the `max_retries` option:
 
 ```python
-from sports_odds_api import SportsGameOdds
+client = SportsGameOdds(max_retries=0)  # default is 2
 
-# Configure the default for all requests:
-client = SportsGameOdds(
-    # default is 2
-    max_retries=0,
-)
-
-# Or, configure per-request:
 client.with_options(max_retries=5).events.get()
 ```
 
 ### Timeouts
 
-By default requests time out after 1 minute. You can configure this with a `timeout` option,
-which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/timeouts/#fine-tuning-the-configuration) object:
+Requests time out after 1 minute by default. Configure this with a `timeout` option:
 
 ```python
 from sports_odds_api import SportsGameOdds
+import httpx
 
-# Configure the default for all requests:
-client = SportsGameOdds(
-    # 20 seconds (default is 1 minute)
-    timeout=20.0,
-)
+client = SportsGameOdds(timeout=20.0)
 
-# More granular control:
-client = SportsGameOdds(
-    timeout=httpx.Timeout(60.0, read=5.0, write=10.0, connect=2.0),
-)
+client = SportsGameOdds(timeout=httpx.Timeout(60.0, read=5.0, write=10.0, connect=2.0))
 
-# Override per-request:
 client.with_options(timeout=5.0).events.get()
 ```
 
 On timeout, an `APITimeoutError` is thrown.
 
-Note that requests that time out are [retried twice by default](#retries).
+## Auto-pagination
 
-## Advanced
+Requests for Events, Teams, and Players are paginated.
 
-### Logging
+```python
+from sports_odds_api import SportsGameOdds
 
-We use the standard library [`logging`](https://docs.python.org/3/library/logging.html) module.
+client = SportsGameOdds()
 
-You can enable logging by setting the environment variable `SPORTS_GAME_ODDS_LOG` to `info`.
-
-```shell
-$ export SPORTS_GAME_ODDS_LOG=info
+all_events = []
+for event in client.events.get(limit=30):
+    all_events.append(event)
 ```
 
-Or to `debug` for more verbose logging.
+Async:
 
-### How to tell whether `None` means `null` or missing
+```python
+import asyncio
+from sports_odds_api import AsyncSportsGameOdds
 
-In an API response, a field may be explicitly `null`, or missing entirely; in either case, its value is `None` in this library. You can differentiate the two cases with `.model_fields_set`:
+client = AsyncSportsGameOdds()
 
-```py
-if response.my_field is None:
-  if 'my_field' not in response.model_fields_set:
-    print('Got json like {}, without a "my_field" key present at all.')
-  else:
-    print('Got json like {"my_field": null}.')
+async def main():
+    all_events = []
+    async for event in client.events.get(limit=30):
+        all_events.append(event)
+    print(all_events)
+
+asyncio.run(main())
 ```
 
-### Accessing raw response data (e.g. headers)
+Convenience methods: `.has_next_page()`, `.next_page_info()`, `.get_next_page()`
 
-The "raw" Response object can be accessed by prefixing `.with_raw_response.` to any HTTP method call, e.g.,
+## Advanced Usage
 
-```py
+### Accessing raw response data (e.g., headers)
+
+```python
 from sports_odds_api import SportsGameOdds
 
 client = SportsGameOdds()
 response = client.events.with_raw_response.get()
-print(response.headers.get('X-My-Header'))
+print(response.headers.get("X-My-Header"))
 
-event = response.parse()  # get the object that `events.get()` would have returned
+event = response.parse()
 print(event.activity)
 ```
 
-These methods return an [`APIResponse`](https://github.com/stainless-sdks/sports-odds-api-python/tree/main/src/sports_odds_api/_response.py) object.
+### Logging
 
-The async client returns an [`AsyncAPIResponse`](https://github.com/stainless-sdks/sports-odds-api-python/tree/main/src/sports_odds_api/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
+Enable logging with:
 
-#### `.with_streaming_response`
-
-The above interface eagerly reads the full response body when you make the request, which may not always be what you want.
-
-To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
-
-```python
-with client.events.with_streaming_response.get() as response:
-    print(response.headers.get("X-My-Header"))
-
-    for line in response.iter_lines():
-        print(line)
+```sh
+export SPORTS_GAME_ODDS_LOG=info
 ```
 
-The context manager is required so that the response will reliably be closed.
+Or for more verbose:
+
+```sh
+export SPORTS_GAME_ODDS_LOG=debug
+```
 
 ### Making custom/undocumented requests
 
-This library is typed for convenient access to the documented API.
-
-If you need to access undocumented endpoints, params, or response properties, the library can still be used.
-
-#### Undocumented endpoints
-
-To make requests to undocumented endpoints, you can make requests using `client.get`, `client.post`, and other
-http verbs. Options on the client will be respected (such as retries) when making this request.
-
-```py
+```python
 import httpx
 
 response = client.post(
@@ -354,82 +271,6 @@ response = client.post(
 )
 
 print(response.headers.get("x-foo"))
-```
-
-#### Undocumented request params
-
-If you want to explicitly send an extra param, you can do so with the `extra_query`, `extra_body`, and `extra_headers` request
-options.
-
-#### Undocumented response properties
-
-To access undocumented response properties, you can access the extra fields like `response.unknown_prop`. You
-can also get all the extra fields on the Pydantic model as a dict with
-[`response.model_extra`](https://docs.pydantic.dev/latest/api/base_model/#pydantic.BaseModel.model_extra).
-
-### Configuring the HTTP client
-
-You can directly override the [httpx client](https://www.python-httpx.org/api/#client) to customize it for your use case, including:
-
-- Support for [proxies](https://www.python-httpx.org/advanced/proxies/)
-- Custom [transports](https://www.python-httpx.org/advanced/transports/)
-- Additional [advanced](https://www.python-httpx.org/advanced/clients/) functionality
-
-```python
-import httpx
-from sports_odds_api import SportsGameOdds, DefaultHttpxClient
-
-client = SportsGameOdds(
-    # Or use the `SPORTS_GAME_ODDS_BASE_URL` env var
-    base_url="http://my.test.server.example.com:8083",
-    http_client=DefaultHttpxClient(
-        proxy="http://my.test.proxy.example.com",
-        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
-    ),
-)
-```
-
-You can also customize the client on a per-request basis by using `with_options()`:
-
-```python
-client.with_options(http_client=DefaultHttpxClient(...))
-```
-
-### Managing HTTP resources
-
-By default the library closes underlying HTTP connections whenever the client is [garbage collected](https://docs.python.org/3/reference/datamodel.html#object.__del__). You can manually close the client using the `.close()` method if desired, or with a context manager that closes when exiting.
-
-```py
-from sports_odds_api import SportsGameOdds
-
-with SportsGameOdds() as client:
-  # make requests here
-  ...
-
-# HTTP client is now closed
-```
-
-## Versioning
-
-This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions, though certain backwards-incompatible changes may be released as minor versions:
-
-1. Changes that only affect static types, without breaking runtime behavior.
-2. Changes to library internals which are technically public but not intended or documented for external use. _(Please open a GitHub issue to let us know if you are relying on such internals.)_
-3. Changes that we do not expect to impact the vast majority of users in practice.
-
-We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
-
-We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/sports-odds-api-python/issues) with questions, bugs, or suggestions.
-
-### Determining the installed version
-
-If you've upgraded to the latest version but aren't seeing any new features you were expecting then your python environment is likely still using an older version.
-
-You can determine the version that is being used at runtime with:
-
-```py
-import sports_odds_api
-print(sports_odds_api.__version__)
 ```
 
 ## Requirements
