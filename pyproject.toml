@@ -1,5 +1,5 @@
 [project]
-name = "sports_odds_api"
+name = "sports-odds-api"
 version = "0.0.1"
 description = "The official Python library for the SportsGameOdds API"
 dynamic = ["readme"]
