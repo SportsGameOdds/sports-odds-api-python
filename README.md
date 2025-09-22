@@ -1,7 +1,7 @@
 # Sports Game Odds Python API library
 
 <!-- prettier-ignore -->
-[![PyPI version](https://img.shields.io/pypi/v/sports_odds_api.svg?label=pypi%20(stable))](https://pypi.org/project/sports_odds_api/)
+[![PyPI version](https://img.shields.io/pypi/v/sports-odds-api.svg?label=pypi%20(stable))](https://pypi.org/project/sports-odds-api/)
 
 The Sports Game Odds Python library provides convenient access to the Sports Game Odds REST API from any Python 3.8+
 application. The library includes type definitions for all request params and response fields,
@@ -16,12 +16,9 @@ The REST API documentation can be found on [sportsgameodds.com](https://sportsga
 ## Installation
 
 ```sh
-# install from the production repo
-pip install git+ssh://git@github.com/SportsGameOdds/sports-odds-api-python.git
+# install from PyPI
+pip install sports-odds-api
 ```
-
-> [!NOTE]
-> Once this package is [published to PyPI](https://www.stainless.com/docs/guides/publish), this will become: `pip install sports_odds_api`
 
 ## Usage
 
@@ -79,8 +76,8 @@ By default, the async client uses `httpx` for HTTP requests. However, for improv
 You can enable this by installing `aiohttp`:
 
 ```sh
-# install from the production repo
-pip install 'sports_odds_api[aiohttp] @ git+ssh://git@github.com/SportsGameOdds/sports-odds-api-python.git'
+# install from PyPI
+pip install sports-odds-api[aiohttp]
 ```
 
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
