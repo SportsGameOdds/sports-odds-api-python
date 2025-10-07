@@ -10,8 +10,9 @@ This example demonstrates:
 """
 
 import os
-from sports_odds_api import SportsGameOdds
+
 import sports_odds_api
+from sports_odds_api import SportsGameOdds
 
 # Get your API key from https://sportsgameodds.com/pricing
 API_KEY = os.environ.get("SPORTS_ODDS_API_KEY_HEADER")

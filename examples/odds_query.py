@@ -10,6 +10,7 @@ This example demonstrates:
 """
 
 import os
+
 from sports_odds_api import SportsGameOdds
 
 # Get your API key from https://sportsgameodds.com/pricing
@@ -64,7 +65,7 @@ for event in page.data:
 
     # Group odds by betTypeID
     # IMPORTANT: event.odds is a dict/object keyed by oddID, NOT a list!
-    for odd_id, odd in event.odds.items():
+    for _odd_id, odd in event.odds.items():
         bet_type_id = odd.bet_type_id
         if bet_type_id not in odds_map[event_id]:
             odds_map[event_id][bet_type_id] = []

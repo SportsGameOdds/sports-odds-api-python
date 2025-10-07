@@ -15,8 +15,9 @@ Note: Streaming requires an AllStar plan subscription
 import os
 import signal
 import sys
-from sports_odds_api import SportsGameOdds
+
 import sports_odds_api
+from sports_odds_api import SportsGameOdds
 
 # Check for pusher library
 try:
@@ -49,7 +50,7 @@ print("Note: Streaming requires an AllStar plan subscription\n")
 events = {}
 pusher_client = None
 
-def handle_shutdown(signum, frame):
+def handle_shutdown(_signum, _frame):
     """Handle graceful shutdown on Ctrl+C"""
     print("\n\nDisconnecting...")
     if pusher_client:
