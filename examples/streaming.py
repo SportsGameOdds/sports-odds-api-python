@@ -12,12 +12,15 @@ This example demonstrates:
 Note: Streaming requires an AllStar plan subscription
 """
 
+# Standard Library Imports
+from datetime import datetime
 import os
 import signal
 import sys
 import time
-from datetime import datetime
+import traceback
 
+# Third-Party Imports
 import pusher
 import sports_odds_api
 from sports_odds_api import SportsGameOdds
@@ -131,8 +134,7 @@ except sports_odds_api.APIError as e:
 except Exception as e:
     print(f"✗ Unexpected error: {str(e)}")
     print(f"Error type: {e.__class__.__name__}")
-    import traceback
-
+    # traceback is now correctly imported at the top
     print("\n".join(traceback.format_tb(e.__traceback__)[:5]))
 finally:
     if pusher_client:
