@@ -15,17 +15,12 @@ Note: Streaming requires an AllStar plan subscription
 import os
 import signal
 import sys
+import time
+from datetime import datetime
 
+import pusher
 import sports_odds_api
 from sports_odds_api import SportsGameOdds
-
-# Check for pusher library
-try:
-    import pusher
-except ImportError:
-    print("Error: pusher library not found")
-    print("Install it with: pip install pusher")
-    exit(1)
 
 # Get your API key from https://sportsgameodds.com/pricing
 # Note: Streaming requires an AllStar plan subscription
@@ -40,7 +35,7 @@ if not API_KEY:
 client = SportsGameOdds(
     api_key_param=API_KEY,
     timeout=30.0,
-    max_retries=2
+    max_retries=2,
 )
 
 print("Sports Odds API Python SDK - Streaming Example")
@@ -50,6 +45,7 @@ print("Note: Streaming requires an AllStar plan subscription\n")
 events = {}
 pusher_client = None
 
+
 def handle_shutdown(_signum, _frame):
     """Handle graceful shutdown on Ctrl+C"""
     print("\n\nDisconnecting...")
@@ -57,6 +53,7 @@ def handle_shutdown(_signum, _frame):
         pusher_client.disconnect()
     print("✓ Disconnected from stream")
     sys.exit(0)
+
 
 # Register signal handler for Ctrl+C
 signal.signal(signal.SIGINT, handle_shutdown)
@@ -84,7 +81,7 @@ try:
     # Connect to WebSocket server
     pusher_client = pusher.Pusher(
         app_id=stream_info.pusher_key,
-        **stream_info.pusher_options
+        **stream_info.pusher_options,
     )
 
     # Subscribe to the channel
@@ -93,9 +90,9 @@ try:
     # Bind to the 'data' event
     def handle_event(changed_events):
         """Handle incoming event updates"""
-        from datetime import datetime
-
-        print(f"\n[{datetime.now().strftime('%H:%M:%S')}] Received update for {len(changed_events)} event(s)")
+        print(
+            f"\n[{datetime.now().strftime('%H:%M:%S')}] Received update for {len(changed_events)} event(s)"
+        )
 
         # Get the eventIDs that changed
         event_ids = ",".join([e["eventID"] for e in changed_events])
@@ -108,9 +105,9 @@ try:
             events[event.event_id] = event
 
             print(f"  Updated: {event.event_id}")
-            if hasattr(event, 'away_team_name') and hasattr(event, 'home_team_name'):
+            if hasattr(event, "away_team_name") and hasattr(event, "home_team_name"):
                 print(f"    {event.away_team_name} @ {event.home_team_name}")
-            if hasattr(event, 'activity'):
+            if hasattr(event, "activity"):
                 print(f"    Activity: {event.activity}")
 
     channel.bind("data", handle_event)
@@ -123,10 +120,9 @@ try:
 
     # Keep the script running
     while True:
-        import time
         time.sleep(1)
 
-except sports_odds_api.PermissionDeniedError as e:
+except sports_odds_api.PermissionDeniedError:
     print("✗ Error: Streaming requires an AllStar plan subscription")
     print("Visit https://sportsgameodds.com/pricing to upgrade your plan")
 except sports_odds_api.APIError as e:
@@ -136,6 +132,7 @@ except Exception as e:
     print(f"✗ Unexpected error: {str(e)}")
     print(f"Error type: {e.__class__.__name__}")
     import traceback
+
     print("\n".join(traceback.format_tb(e.__traceback__)[:5]))
 finally:
     if pusher_client:
