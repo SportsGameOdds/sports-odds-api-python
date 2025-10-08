@@ -53,6 +53,7 @@ class EventsResource(SyncAPIResource):
         cursor: str | Omit = omit,
         ended: bool | Omit = omit,
         event_id: str | Omit = omit,
+        event_ids: str | Omit = omit,
         finalized: bool | Omit = omit,
         include_alt_lines: bool | Omit = omit,
         include_opposing_odds: bool | Omit = omit,
@@ -91,7 +92,9 @@ class EventsResource(SyncAPIResource):
           ended: Only include Events which have have ended (true), only Events which have not
               ended (false) or all Events (omit)
 
-          event_id: An eventID or comma-separated list of eventIDs to get Event data for
+          event_id: An eventID to get Event data for
+
+          event_ids: A comma separated list of eventIDs to get Event data for
 
           finalized: Only include finalized Events (true), exclude unfinalized Events (false) or all
               Events (omit)
@@ -155,6 +158,7 @@ class EventsResource(SyncAPIResource):
                         "cursor": cursor,
                         "ended": ended,
                         "event_id": event_id,
+                        "event_ids": event_ids,
                         "finalized": finalized,
                         "include_alt_lines": include_alt_lines,
                         "include_opposing_odds": include_opposing_odds,
@@ -207,6 +211,7 @@ class AsyncEventsResource(AsyncAPIResource):
         cursor: str | Omit = omit,
         ended: bool | Omit = omit,
         event_id: str | Omit = omit,
+        event_ids: str | Omit = omit,
         finalized: bool | Omit = omit,
         include_alt_lines: bool | Omit = omit,
         include_opposing_odds: bool | Omit = omit,
@@ -245,7 +250,9 @@ class AsyncEventsResource(AsyncAPIResource):
           ended: Only include Events which have have ended (true), only Events which have not
               ended (false) or all Events (omit)
 
-          event_id: An eventID or comma-separated list of eventIDs to get Event data for
+          event_id: An eventID to get Event data for
+
+          event_ids: A comma separated list of eventIDs to get Event data for
 
           finalized: Only include finalized Events (true), exclude unfinalized Events (false) or all
               Events (omit)
@@ -309,6 +316,7 @@ class AsyncEventsResource(AsyncAPIResource):
                         "cursor": cursor,
                         "ended": ended,
                         "event_id": event_id,
+                        "event_ids": event_ids,
                         "finalized": finalized,
                         "include_alt_lines": include_alt_lines,
                         "include_opposing_odds": include_opposing_odds,
