@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 """
 Sports Odds API Python SDK - Odds Query Example
 
@@ -56,7 +57,7 @@ for event in page.data:
     odds_map[event_id] = {}
 
     print(f"Event: {event_id}")
-    print(f"  {event.away_team_name} @ {event.home_team_name}")
+    print(f"  {event.teams.away.names.long} @ {event.teams.home.names.long}")
 
     # Check if odds exist
     if not hasattr(event, 'odds') or not event.odds:

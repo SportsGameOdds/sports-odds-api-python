@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 """
 Sports Odds API Python SDK - Streaming Example
 
@@ -13,15 +14,16 @@ Note: Streaming requires an AllStar plan subscription
 """
 
 # Standard Library Imports
-from datetime import datetime
 import os
-import signal
 import sys
 import time
+import signal
 import traceback
+from datetime import datetime
 
 # Third-Party Imports
 import pusher
+
 import sports_odds_api
 from sports_odds_api import SportsGameOdds
 
@@ -108,10 +110,11 @@ try:
             events[event.event_id] = event
 
             print(f"  Updated: {event.event_id}")
-            if hasattr(event, "away_team_name") and hasattr(event, "home_team_name"):
-                print(f"    {event.away_team_name} @ {event.home_team_name}")
-            if hasattr(event, "activity"):
-                print(f"    Activity: {event.activity}")
+            if hasattr(event, "teams") and hasattr(event.teams, "away") and hasattr(event.teams.away, "names"):
+                away_name = getattr(event.teams.away.names, "long", None)
+                home_name = getattr(event.teams.home.names, "long", None)
+                if away_name and home_name:
+                    print(f"    {away_name} @ {home_name}")
 
     channel.bind("data", handle_event)
 
