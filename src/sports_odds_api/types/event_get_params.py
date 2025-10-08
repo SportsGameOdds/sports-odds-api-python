@@ -35,7 +35,10 @@ class EventGetParams(TypedDict, total=False):
     """
 
     event_id: Annotated[str, PropertyInfo(alias="eventID")]
-    """An eventID or comma-separated list of eventIDs to get Event data for"""
+    """An eventID to get Event data for"""
+
+    event_ids: Annotated[str, PropertyInfo(alias="eventIDs")]
+    """A comma separated list of eventIDs to get Event data for"""
 
     finalized: bool
     """
