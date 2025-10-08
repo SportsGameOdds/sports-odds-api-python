@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.0 (2025-10-08)
+
+Full Changelog: [v1.0.0...v1.1.0](https://github.com/SportsGameOdds/sports-odds-api-python/compare/v1.0.0...v1.1.0)
+
+### Features
+
+* test ([08e9d02](https://github.com/SportsGameOdds/sports-odds-api-python/commit/08e9d0200c7449750082cb5f0ae229012d9f633b))
+
 ## 1.0.0 (2025-09-22)
 
 Full Changelog: [v0.0.1...v1.0.0](https://github.com/SportsGameOdds/sports-odds-api-python/compare/v0.0.1...v1.0.0)

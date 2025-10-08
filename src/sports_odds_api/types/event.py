@@ -244,7 +244,6 @@ class Event(BaseModel):
     players: Optional[Dict[str, Players]] = None
 
     results: Optional[Dict[str, Dict[str, Dict[str, float]]]] = None
-    """Nested results in the format `<periodID>.<statEntityID>.<statID> → number`."""
 
     sport_id: Optional[str] = FieldInfo(alias="sportID", default=None)
 

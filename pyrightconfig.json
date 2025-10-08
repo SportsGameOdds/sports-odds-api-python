@@ -1,0 +1,7 @@
+{
+  "exclude": [
+    "examples",
+    "tests",
+    ".venv"
+  ]
+}
