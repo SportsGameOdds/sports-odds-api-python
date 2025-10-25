@@ -1,6 +1,6 @@
 [project]
 name = "sports-odds-api"
-version = "1.1.0"
+version = "1.1.1"
 description = "The official Python library for the SportsGameOdds API"
 dynamic = ["readme"]
 license = "Apache-2.0"

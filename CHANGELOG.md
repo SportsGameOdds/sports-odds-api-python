@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.1.1 (2025-10-25)
+
+Full Changelog: [v1.1.0...v1.1.1](https://github.com/SportsGameOdds/sports-odds-api-python/compare/v1.1.0...v1.1.1)
+
+### Chores
+
+* bump `httpx-aiohttp` version to 0.1.9 ([4ad809b](https://github.com/SportsGameOdds/sports-odds-api-python/commit/4ad809bd6be303c294a24a6f31555be1ce9a5699))
+* **internal:** detect missing future annotations with ruff ([c33e446](https://github.com/SportsGameOdds/sports-odds-api-python/commit/c33e446780bc457e93b9d5340230f86a09e08146))
+
 ## 1.1.0 (2025-10-08)
 
 Full Changelog: [v1.0.0...v1.1.0](https://github.com/SportsGameOdds/sports-odds-api-python/compare/v1.0.0...v1.1.0)
