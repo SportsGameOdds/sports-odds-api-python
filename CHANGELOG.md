@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.1.2 (2025-10-31)
+
+Full Changelog: [v1.1.1...v1.1.2](https://github.com/SportsGameOdds/sports-odds-api-python/compare/v1.1.1...v1.1.2)
+
+### Bug Fixes
+
+* **client:** close streams without requiring full consumption ([eae1c70](https://github.com/SportsGameOdds/sports-odds-api-python/commit/eae1c7004180153ae9662fcd5852d8fbcf7eb651))
+
+
+### Chores
+
+* **internal/tests:** avoid race condition with implicit client cleanup ([794a30d](https://github.com/SportsGameOdds/sports-odds-api-python/commit/794a30de6f17440b1ab18842f224cb5682bc6370))
+
 ## 1.1.1 (2025-10-25)
 
 Full Changelog: [v1.1.0...v1.1.1](https://github.com/SportsGameOdds/sports-odds-api-python/compare/v1.1.0...v1.1.1)
