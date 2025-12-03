@@ -83,6 +83,7 @@ pip install sports-odds-api[aiohttp]
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
 
 ```python
+import os
 import asyncio
 from sports_odds_api import DefaultAioHttpClient
 from sports_odds_api import AsyncSportsGameOdds
@@ -90,7 +91,9 @@ from sports_odds_api import AsyncSportsGameOdds
 
 async def main() -> None:
     async with AsyncSportsGameOdds(
-        api_key_param="My API Key Param",
+        api_key_param=os.environ.get(
+            "SPORTS_ODDS_API_KEY_HEADER"
+        ),  # This is the default and can be omitted
         http_client=DefaultAioHttpClient(),
     ) as client:
         page = await client.events.get()
