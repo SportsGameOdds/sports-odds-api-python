@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import os
-from typing import Any, Mapping
+from typing import TYPE_CHECKING, Any, Mapping
 from typing_extensions import Self, override
 
 import httpx
@@ -20,8 +20,8 @@ from ._types import (
     not_given,
 )
 from ._utils import is_given, get_async_library
+from ._compat import cached_property
 from ._version import __version__
-from .resources import stats, teams, events, sports, stream, account, leagues, players
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError
 from ._base_client import (
@@ -29,6 +29,17 @@ from ._base_client import (
     SyncAPIClient,
     AsyncAPIClient,
 )
+
+if TYPE_CHECKING:
+    from .resources import stats, teams, events, sports, stream, account, leagues, players
+    from .resources.stats import StatsResource, AsyncStatsResource
+    from .resources.teams import TeamsResource, AsyncTeamsResource
+    from .resources.events import EventsResource, AsyncEventsResource
+    from .resources.sports import SportsResource, AsyncSportsResource
+    from .resources.stream import StreamResource, AsyncStreamResource
+    from .resources.account import AccountResource, AsyncAccountResource
+    from .resources.leagues import LeaguesResource, AsyncLeaguesResource
+    from .resources.players import PlayersResource, AsyncPlayersResource
 
 __all__ = [
     "Timeout",
@@ -43,17 +54,6 @@ __all__ = [
 
 
 class SportsGameOdds(SyncAPIClient):
-    events: events.EventsResource
-    teams: teams.TeamsResource
-    players: players.PlayersResource
-    leagues: leagues.LeaguesResource
-    sports: sports.SportsResource
-    stats: stats.StatsResource
-    account: account.AccountResource
-    stream: stream.StreamResource
-    with_raw_response: SportsGameOddsWithRawResponse
-    with_streaming_response: SportsGameOddsWithStreamedResponse
-
     # client options
     api_key_header: str | None
     api_key_param: str | None
@@ -112,16 +112,61 @@ class SportsGameOdds(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.events = events.EventsResource(self)
-        self.teams = teams.TeamsResource(self)
-        self.players = players.PlayersResource(self)
-        self.leagues = leagues.LeaguesResource(self)
-        self.sports = sports.SportsResource(self)
-        self.stats = stats.StatsResource(self)
-        self.account = account.AccountResource(self)
-        self.stream = stream.StreamResource(self)
-        self.with_raw_response = SportsGameOddsWithRawResponse(self)
-        self.with_streaming_response = SportsGameOddsWithStreamedResponse(self)
+    @cached_property
+    def events(self) -> EventsResource:
+        from .resources.events import EventsResource
+
+        return EventsResource(self)
+
+    @cached_property
+    def teams(self) -> TeamsResource:
+        from .resources.teams import TeamsResource
+
+        return TeamsResource(self)
+
+    @cached_property
+    def players(self) -> PlayersResource:
+        from .resources.players import PlayersResource
+
+        return PlayersResource(self)
+
+    @cached_property
+    def leagues(self) -> LeaguesResource:
+        from .resources.leagues import LeaguesResource
+
+        return LeaguesResource(self)
+
+    @cached_property
+    def sports(self) -> SportsResource:
+        from .resources.sports import SportsResource
+
+        return SportsResource(self)
+
+    @cached_property
+    def stats(self) -> StatsResource:
+        from .resources.stats import StatsResource
+
+        return StatsResource(self)
+
+    @cached_property
+    def account(self) -> AccountResource:
+        from .resources.account import AccountResource
+
+        return AccountResource(self)
+
+    @cached_property
+    def stream(self) -> StreamResource:
+        from .resources.stream import StreamResource
+
+        return StreamResource(self)
+
+    @cached_property
+    def with_raw_response(self) -> SportsGameOddsWithRawResponse:
+        return SportsGameOddsWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> SportsGameOddsWithStreamedResponse:
+        return SportsGameOddsWithStreamedResponse(self)
 
     @property
     @override
@@ -242,17 +287,6 @@ class SportsGameOdds(SyncAPIClient):
 
 
 class AsyncSportsGameOdds(AsyncAPIClient):
-    events: events.AsyncEventsResource
-    teams: teams.AsyncTeamsResource
-    players: players.AsyncPlayersResource
-    leagues: leagues.AsyncLeaguesResource
-    sports: sports.AsyncSportsResource
-    stats: stats.AsyncStatsResource
-    account: account.AsyncAccountResource
-    stream: stream.AsyncStreamResource
-    with_raw_response: AsyncSportsGameOddsWithRawResponse
-    with_streaming_response: AsyncSportsGameOddsWithStreamedResponse
-
     # client options
     api_key_header: str | None
     api_key_param: str | None
@@ -311,16 +345,61 @@ class AsyncSportsGameOdds(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.events = events.AsyncEventsResource(self)
-        self.teams = teams.AsyncTeamsResource(self)
-        self.players = players.AsyncPlayersResource(self)
-        self.leagues = leagues.AsyncLeaguesResource(self)
-        self.sports = sports.AsyncSportsResource(self)
-        self.stats = stats.AsyncStatsResource(self)
-        self.account = account.AsyncAccountResource(self)
-        self.stream = stream.AsyncStreamResource(self)
-        self.with_raw_response = AsyncSportsGameOddsWithRawResponse(self)
-        self.with_streaming_response = AsyncSportsGameOddsWithStreamedResponse(self)
+    @cached_property
+    def events(self) -> AsyncEventsResource:
+        from .resources.events import AsyncEventsResource
+
+        return AsyncEventsResource(self)
+
+    @cached_property
+    def teams(self) -> AsyncTeamsResource:
+        from .resources.teams import AsyncTeamsResource
+
+        return AsyncTeamsResource(self)
+
+    @cached_property
+    def players(self) -> AsyncPlayersResource:
+        from .resources.players import AsyncPlayersResource
+
+        return AsyncPlayersResource(self)
+
+    @cached_property
+    def leagues(self) -> AsyncLeaguesResource:
+        from .resources.leagues import AsyncLeaguesResource
+
+        return AsyncLeaguesResource(self)
+
+    @cached_property
+    def sports(self) -> AsyncSportsResource:
+        from .resources.sports import AsyncSportsResource
+
+        return AsyncSportsResource(self)
+
+    @cached_property
+    def stats(self) -> AsyncStatsResource:
+        from .resources.stats import AsyncStatsResource
+
+        return AsyncStatsResource(self)
+
+    @cached_property
+    def account(self) -> AsyncAccountResource:
+        from .resources.account import AsyncAccountResource
+
+        return AsyncAccountResource(self)
+
+    @cached_property
+    def stream(self) -> AsyncStreamResource:
+        from .resources.stream import AsyncStreamResource
+
+        return AsyncStreamResource(self)
+
+    @cached_property
+    def with_raw_response(self) -> AsyncSportsGameOddsWithRawResponse:
+        return AsyncSportsGameOddsWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> AsyncSportsGameOddsWithStreamedResponse:
+        return AsyncSportsGameOddsWithStreamedResponse(self)
 
     @property
     @override
@@ -441,51 +520,223 @@ class AsyncSportsGameOdds(AsyncAPIClient):
 
 
 class SportsGameOddsWithRawResponse:
+    _client: SportsGameOdds
+
     def __init__(self, client: SportsGameOdds) -> None:
-        self.events = events.EventsResourceWithRawResponse(client.events)
-        self.teams = teams.TeamsResourceWithRawResponse(client.teams)
-        self.players = players.PlayersResourceWithRawResponse(client.players)
-        self.leagues = leagues.LeaguesResourceWithRawResponse(client.leagues)
-        self.sports = sports.SportsResourceWithRawResponse(client.sports)
-        self.stats = stats.StatsResourceWithRawResponse(client.stats)
-        self.account = account.AccountResourceWithRawResponse(client.account)
-        self.stream = stream.StreamResourceWithRawResponse(client.stream)
+        self._client = client
+
+    @cached_property
+    def events(self) -> events.EventsResourceWithRawResponse:
+        from .resources.events import EventsResourceWithRawResponse
+
+        return EventsResourceWithRawResponse(self._client.events)
+
+    @cached_property
+    def teams(self) -> teams.TeamsResourceWithRawResponse:
+        from .resources.teams import TeamsResourceWithRawResponse
+
+        return TeamsResourceWithRawResponse(self._client.teams)
+
+    @cached_property
+    def players(self) -> players.PlayersResourceWithRawResponse:
+        from .resources.players import PlayersResourceWithRawResponse
+
+        return PlayersResourceWithRawResponse(self._client.players)
+
+    @cached_property
+    def leagues(self) -> leagues.LeaguesResourceWithRawResponse:
+        from .resources.leagues import LeaguesResourceWithRawResponse
+
+        return LeaguesResourceWithRawResponse(self._client.leagues)
+
+    @cached_property
+    def sports(self) -> sports.SportsResourceWithRawResponse:
+        from .resources.sports import SportsResourceWithRawResponse
+
+        return SportsResourceWithRawResponse(self._client.sports)
+
+    @cached_property
+    def stats(self) -> stats.StatsResourceWithRawResponse:
+        from .resources.stats import StatsResourceWithRawResponse
+
+        return StatsResourceWithRawResponse(self._client.stats)
+
+    @cached_property
+    def account(self) -> account.AccountResourceWithRawResponse:
+        from .resources.account import AccountResourceWithRawResponse
+
+        return AccountResourceWithRawResponse(self._client.account)
+
+    @cached_property
+    def stream(self) -> stream.StreamResourceWithRawResponse:
+        from .resources.stream import StreamResourceWithRawResponse
+
+        return StreamResourceWithRawResponse(self._client.stream)
 
 
 class AsyncSportsGameOddsWithRawResponse:
+    _client: AsyncSportsGameOdds
+
     def __init__(self, client: AsyncSportsGameOdds) -> None:
-        self.events = events.AsyncEventsResourceWithRawResponse(client.events)
-        self.teams = teams.AsyncTeamsResourceWithRawResponse(client.teams)
-        self.players = players.AsyncPlayersResourceWithRawResponse(client.players)
-        self.leagues = leagues.AsyncLeaguesResourceWithRawResponse(client.leagues)
-        self.sports = sports.AsyncSportsResourceWithRawResponse(client.sports)
-        self.stats = stats.AsyncStatsResourceWithRawResponse(client.stats)
-        self.account = account.AsyncAccountResourceWithRawResponse(client.account)
-        self.stream = stream.AsyncStreamResourceWithRawResponse(client.stream)
+        self._client = client
+
+    @cached_property
+    def events(self) -> events.AsyncEventsResourceWithRawResponse:
+        from .resources.events import AsyncEventsResourceWithRawResponse
+
+        return AsyncEventsResourceWithRawResponse(self._client.events)
+
+    @cached_property
+    def teams(self) -> teams.AsyncTeamsResourceWithRawResponse:
+        from .resources.teams import AsyncTeamsResourceWithRawResponse
+
+        return AsyncTeamsResourceWithRawResponse(self._client.teams)
+
+    @cached_property
+    def players(self) -> players.AsyncPlayersResourceWithRawResponse:
+        from .resources.players import AsyncPlayersResourceWithRawResponse
+
+        return AsyncPlayersResourceWithRawResponse(self._client.players)
+
+    @cached_property
+    def leagues(self) -> leagues.AsyncLeaguesResourceWithRawResponse:
+        from .resources.leagues import AsyncLeaguesResourceWithRawResponse
+
+        return AsyncLeaguesResourceWithRawResponse(self._client.leagues)
+
+    @cached_property
+    def sports(self) -> sports.AsyncSportsResourceWithRawResponse:
+        from .resources.sports import AsyncSportsResourceWithRawResponse
+
+        return AsyncSportsResourceWithRawResponse(self._client.sports)
+
+    @cached_property
+    def stats(self) -> stats.AsyncStatsResourceWithRawResponse:
+        from .resources.stats import AsyncStatsResourceWithRawResponse
+
+        return AsyncStatsResourceWithRawResponse(self._client.stats)
+
+    @cached_property
+    def account(self) -> account.AsyncAccountResourceWithRawResponse:
+        from .resources.account import AsyncAccountResourceWithRawResponse
+
+        return AsyncAccountResourceWithRawResponse(self._client.account)
+
+    @cached_property
+    def stream(self) -> stream.AsyncStreamResourceWithRawResponse:
+        from .resources.stream import AsyncStreamResourceWithRawResponse
+
+        return AsyncStreamResourceWithRawResponse(self._client.stream)
 
 
 class SportsGameOddsWithStreamedResponse:
+    _client: SportsGameOdds
+
     def __init__(self, client: SportsGameOdds) -> None:
-        self.events = events.EventsResourceWithStreamingResponse(client.events)
-        self.teams = teams.TeamsResourceWithStreamingResponse(client.teams)
-        self.players = players.PlayersResourceWithStreamingResponse(client.players)
-        self.leagues = leagues.LeaguesResourceWithStreamingResponse(client.leagues)
-        self.sports = sports.SportsResourceWithStreamingResponse(client.sports)
-        self.stats = stats.StatsResourceWithStreamingResponse(client.stats)
-        self.account = account.AccountResourceWithStreamingResponse(client.account)
-        self.stream = stream.StreamResourceWithStreamingResponse(client.stream)
+        self._client = client
+
+    @cached_property
+    def events(self) -> events.EventsResourceWithStreamingResponse:
+        from .resources.events import EventsResourceWithStreamingResponse
+
+        return EventsResourceWithStreamingResponse(self._client.events)
+
+    @cached_property
+    def teams(self) -> teams.TeamsResourceWithStreamingResponse:
+        from .resources.teams import TeamsResourceWithStreamingResponse
+
+        return TeamsResourceWithStreamingResponse(self._client.teams)
+
+    @cached_property
+    def players(self) -> players.PlayersResourceWithStreamingResponse:
+        from .resources.players import PlayersResourceWithStreamingResponse
+
+        return PlayersResourceWithStreamingResponse(self._client.players)
+
+    @cached_property
+    def leagues(self) -> leagues.LeaguesResourceWithStreamingResponse:
+        from .resources.leagues import LeaguesResourceWithStreamingResponse
+
+        return LeaguesResourceWithStreamingResponse(self._client.leagues)
+
+    @cached_property
+    def sports(self) -> sports.SportsResourceWithStreamingResponse:
+        from .resources.sports import SportsResourceWithStreamingResponse
+
+        return SportsResourceWithStreamingResponse(self._client.sports)
+
+    @cached_property
+    def stats(self) -> stats.StatsResourceWithStreamingResponse:
+        from .resources.stats import StatsResourceWithStreamingResponse
+
+        return StatsResourceWithStreamingResponse(self._client.stats)
+
+    @cached_property
+    def account(self) -> account.AccountResourceWithStreamingResponse:
+        from .resources.account import AccountResourceWithStreamingResponse
+
+        return AccountResourceWithStreamingResponse(self._client.account)
+
+    @cached_property
+    def stream(self) -> stream.StreamResourceWithStreamingResponse:
+        from .resources.stream import StreamResourceWithStreamingResponse
+
+        return StreamResourceWithStreamingResponse(self._client.stream)
 
 
 class AsyncSportsGameOddsWithStreamedResponse:
+    _client: AsyncSportsGameOdds
+
     def __init__(self, client: AsyncSportsGameOdds) -> None:
-        self.events = events.AsyncEventsResourceWithStreamingResponse(client.events)
-        self.teams = teams.AsyncTeamsResourceWithStreamingResponse(client.teams)
-        self.players = players.AsyncPlayersResourceWithStreamingResponse(client.players)
-        self.leagues = leagues.AsyncLeaguesResourceWithStreamingResponse(client.leagues)
-        self.sports = sports.AsyncSportsResourceWithStreamingResponse(client.sports)
-        self.stats = stats.AsyncStatsResourceWithStreamingResponse(client.stats)
-        self.account = account.AsyncAccountResourceWithStreamingResponse(client.account)
-        self.stream = stream.AsyncStreamResourceWithStreamingResponse(client.stream)
+        self._client = client
+
+    @cached_property
+    def events(self) -> events.AsyncEventsResourceWithStreamingResponse:
+        from .resources.events import AsyncEventsResourceWithStreamingResponse
+
+        return AsyncEventsResourceWithStreamingResponse(self._client.events)
+
+    @cached_property
+    def teams(self) -> teams.AsyncTeamsResourceWithStreamingResponse:
+        from .resources.teams import AsyncTeamsResourceWithStreamingResponse
+
+        return AsyncTeamsResourceWithStreamingResponse(self._client.teams)
+
+    @cached_property
+    def players(self) -> players.AsyncPlayersResourceWithStreamingResponse:
+        from .resources.players import AsyncPlayersResourceWithStreamingResponse
+
+        return AsyncPlayersResourceWithStreamingResponse(self._client.players)
+
+    @cached_property
+    def leagues(self) -> leagues.AsyncLeaguesResourceWithStreamingResponse:
+        from .resources.leagues import AsyncLeaguesResourceWithStreamingResponse
+
+        return AsyncLeaguesResourceWithStreamingResponse(self._client.leagues)
+
+    @cached_property
+    def sports(self) -> sports.AsyncSportsResourceWithStreamingResponse:
+        from .resources.sports import AsyncSportsResourceWithStreamingResponse
+
+        return AsyncSportsResourceWithStreamingResponse(self._client.sports)
+
+    @cached_property
+    def stats(self) -> stats.AsyncStatsResourceWithStreamingResponse:
+        from .resources.stats import AsyncStatsResourceWithStreamingResponse
+
+        return AsyncStatsResourceWithStreamingResponse(self._client.stats)
+
+    @cached_property
+    def account(self) -> account.AsyncAccountResourceWithStreamingResponse:
+        from .resources.account import AsyncAccountResourceWithStreamingResponse
+
+        return AsyncAccountResourceWithStreamingResponse(self._client.account)
+
+    @cached_property
+    def stream(self) -> stream.AsyncStreamResourceWithStreamingResponse:
+        from .resources.stream import AsyncStreamResourceWithStreamingResponse
+
+        return AsyncStreamResourceWithStreamingResponse(self._client.stream)
 
 
 Client = SportsGameOdds
