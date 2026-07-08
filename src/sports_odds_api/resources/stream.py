@@ -22,6 +22,8 @@ __all__ = ["StreamResource", "AsyncStreamResource"]
 
 
 class StreamResource(SyncAPIResource):
+    """Get info about Events (includes odds, results, teams, and other metadata)"""
+
     @cached_property
     def with_raw_response(self) -> StreamResourceWithRawResponse:
         """
@@ -93,6 +95,8 @@ class StreamResource(SyncAPIResource):
 
 
 class AsyncStreamResource(AsyncAPIResource):
+    """Get info about Events (includes odds, results, teams, and other metadata)"""
+
     @cached_property
     def with_raw_response(self) -> AsyncStreamResourceWithRawResponse:
         """

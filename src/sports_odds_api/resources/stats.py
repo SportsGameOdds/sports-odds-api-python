@@ -25,6 +25,8 @@ __all__ = ["StatsResource", "AsyncStatsResource"]
 
 
 class StatsResource(SyncAPIResource):
+    """Get data on specific Stats"""
+
     @cached_property
     def with_raw_response(self) -> StatsResourceWithRawResponse:
         """
@@ -99,6 +101,8 @@ class StatsResource(SyncAPIResource):
 
 
 class AsyncStatsResource(AsyncAPIResource):
+    """Get data on specific Stats"""
+
     @cached_property
     def with_raw_response(self) -> AsyncStatsResourceWithRawResponse:
         """

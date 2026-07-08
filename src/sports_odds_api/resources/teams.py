@@ -23,6 +23,8 @@ __all__ = ["TeamsResource", "AsyncTeamsResource"]
 
 
 class TeamsResource(SyncAPIResource):
+    """Get Team-related data"""
+
     @cached_property
     def with_raw_response(self) -> TeamsResourceWithRawResponse:
         """
@@ -105,6 +107,8 @@ class TeamsResource(SyncAPIResource):
 
 
 class AsyncTeamsResource(AsyncAPIResource):
+    """Get Team-related data"""
+
     @cached_property
     def with_raw_response(self) -> AsyncTeamsResourceWithRawResponse:
         """

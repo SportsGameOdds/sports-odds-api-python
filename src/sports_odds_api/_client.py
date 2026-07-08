@@ -19,7 +19,11 @@ from ._types import (
     RequestOptions,
     not_given,
 )
-from ._utils import is_given, get_async_library
+from ._utils import (
+    is_given,
+    is_mapping_t,
+    get_async_library,
+)
 from ._compat import cached_property
 from ._version import __version__
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
@@ -101,6 +105,15 @@ class SportsGameOdds(SyncAPIClient):
         if base_url is None:
             base_url = f"https://api.sportsgameodds.com/v2"
 
+        custom_headers_env = os.environ.get("SPORTS_GAME_ODDS_CUSTOM_HEADERS")
+        if custom_headers_env is not None:
+            parsed: dict[str, str] = {}
+            for line in custom_headers_env.split("\n"):
+                colon = line.find(":")
+                if colon >= 0:
+                    parsed[line[:colon].strip()] = line[colon + 1 :].strip()
+            default_headers = {**parsed, **(default_headers if is_mapping_t(default_headers) else {})}
+
         super().__init__(
             version=__version__,
             base_url=base_url,
@@ -114,48 +127,56 @@ class SportsGameOdds(SyncAPIClient):
 
     @cached_property
     def events(self) -> EventsResource:
+        """Get info about Events (includes odds, results, teams, and other metadata)"""
         from .resources.events import EventsResource
 
         return EventsResource(self)
 
     @cached_property
     def teams(self) -> TeamsResource:
+        """Get Team-related data"""
         from .resources.teams import TeamsResource
 
         return TeamsResource(self)
 
     @cached_property
     def players(self) -> PlayersResource:
+        """Get Player-related data"""
         from .resources.players import PlayersResource
 
         return PlayersResource(self)
 
     @cached_property
     def leagues(self) -> LeaguesResource:
+        """Get League-related data"""
         from .resources.leagues import LeaguesResource
 
         return LeaguesResource(self)
 
     @cached_property
     def sports(self) -> SportsResource:
+        """Get Sport-related data"""
         from .resources.sports import SportsResource
 
         return SportsResource(self)
 
     @cached_property
     def stats(self) -> StatsResource:
+        """Get data on specific Stats"""
         from .resources.stats import StatsResource
 
         return StatsResource(self)
 
     @cached_property
     def account(self) -> AccountResource:
+        """Get data related to your Account & API key"""
         from .resources.account import AccountResource
 
         return AccountResource(self)
 
     @cached_property
     def stream(self) -> StreamResource:
+        """Get info about Events (includes odds, results, teams, and other metadata)"""
         from .resources.stream import StreamResource
 
         return StreamResource(self)
@@ -334,6 +355,15 @@ class AsyncSportsGameOdds(AsyncAPIClient):
         if base_url is None:
             base_url = f"https://api.sportsgameodds.com/v2"
 
+        custom_headers_env = os.environ.get("SPORTS_GAME_ODDS_CUSTOM_HEADERS")
+        if custom_headers_env is not None:
+            parsed: dict[str, str] = {}
+            for line in custom_headers_env.split("\n"):
+                colon = line.find(":")
+                if colon >= 0:
+                    parsed[line[:colon].strip()] = line[colon + 1 :].strip()
+            default_headers = {**parsed, **(default_headers if is_mapping_t(default_headers) else {})}
+
         super().__init__(
             version=__version__,
             base_url=base_url,
@@ -347,48 +377,56 @@ class AsyncSportsGameOdds(AsyncAPIClient):
 
     @cached_property
     def events(self) -> AsyncEventsResource:
+        """Get info about Events (includes odds, results, teams, and other metadata)"""
         from .resources.events import AsyncEventsResource
 
         return AsyncEventsResource(self)
 
     @cached_property
     def teams(self) -> AsyncTeamsResource:
+        """Get Team-related data"""
         from .resources.teams import AsyncTeamsResource
 
         return AsyncTeamsResource(self)
 
     @cached_property
     def players(self) -> AsyncPlayersResource:
+        """Get Player-related data"""
         from .resources.players import AsyncPlayersResource
 
         return AsyncPlayersResource(self)
 
     @cached_property
     def leagues(self) -> AsyncLeaguesResource:
+        """Get League-related data"""
         from .resources.leagues import AsyncLeaguesResource
 
         return AsyncLeaguesResource(self)
 
     @cached_property
     def sports(self) -> AsyncSportsResource:
+        """Get Sport-related data"""
         from .resources.sports import AsyncSportsResource
 
         return AsyncSportsResource(self)
 
     @cached_property
     def stats(self) -> AsyncStatsResource:
+        """Get data on specific Stats"""
         from .resources.stats import AsyncStatsResource
 
         return AsyncStatsResource(self)
 
     @cached_property
     def account(self) -> AsyncAccountResource:
+        """Get data related to your Account & API key"""
         from .resources.account import AsyncAccountResource
 
         return AsyncAccountResource(self)
 
     @cached_property
     def stream(self) -> AsyncStreamResource:
+        """Get info about Events (includes odds, results, teams, and other metadata)"""
         from .resources.stream import AsyncStreamResource
 
         return AsyncStreamResource(self)
@@ -527,48 +565,56 @@ class SportsGameOddsWithRawResponse:
 
     @cached_property
     def events(self) -> events.EventsResourceWithRawResponse:
+        """Get info about Events (includes odds, results, teams, and other metadata)"""
         from .resources.events import EventsResourceWithRawResponse
 
         return EventsResourceWithRawResponse(self._client.events)
 
     @cached_property
     def teams(self) -> teams.TeamsResourceWithRawResponse:
+        """Get Team-related data"""
         from .resources.teams import TeamsResourceWithRawResponse
 
         return TeamsResourceWithRawResponse(self._client.teams)
 
     @cached_property
     def players(self) -> players.PlayersResourceWithRawResponse:
+        """Get Player-related data"""
         from .resources.players import PlayersResourceWithRawResponse
 
         return PlayersResourceWithRawResponse(self._client.players)
 
     @cached_property
     def leagues(self) -> leagues.LeaguesResourceWithRawResponse:
+        """Get League-related data"""
         from .resources.leagues import LeaguesResourceWithRawResponse
 
         return LeaguesResourceWithRawResponse(self._client.leagues)
 
     @cached_property
     def sports(self) -> sports.SportsResourceWithRawResponse:
+        """Get Sport-related data"""
         from .resources.sports import SportsResourceWithRawResponse
 
         return SportsResourceWithRawResponse(self._client.sports)
 
     @cached_property
     def stats(self) -> stats.StatsResourceWithRawResponse:
+        """Get data on specific Stats"""
         from .resources.stats import StatsResourceWithRawResponse
 
         return StatsResourceWithRawResponse(self._client.stats)
 
     @cached_property
     def account(self) -> account.AccountResourceWithRawResponse:
+        """Get data related to your Account & API key"""
         from .resources.account import AccountResourceWithRawResponse
 
         return AccountResourceWithRawResponse(self._client.account)
 
     @cached_property
     def stream(self) -> stream.StreamResourceWithRawResponse:
+        """Get info about Events (includes odds, results, teams, and other metadata)"""
         from .resources.stream import StreamResourceWithRawResponse
 
         return StreamResourceWithRawResponse(self._client.stream)
@@ -582,48 +628,56 @@ class AsyncSportsGameOddsWithRawResponse:
 
     @cached_property
     def events(self) -> events.AsyncEventsResourceWithRawResponse:
+        """Get info about Events (includes odds, results, teams, and other metadata)"""
         from .resources.events import AsyncEventsResourceWithRawResponse
 
         return AsyncEventsResourceWithRawResponse(self._client.events)
 
     @cached_property
     def teams(self) -> teams.AsyncTeamsResourceWithRawResponse:
+        """Get Team-related data"""
         from .resources.teams import AsyncTeamsResourceWithRawResponse
 
         return AsyncTeamsResourceWithRawResponse(self._client.teams)
 
     @cached_property
     def players(self) -> players.AsyncPlayersResourceWithRawResponse:
+        """Get Player-related data"""
         from .resources.players import AsyncPlayersResourceWithRawResponse
 
         return AsyncPlayersResourceWithRawResponse(self._client.players)
 
     @cached_property
     def leagues(self) -> leagues.AsyncLeaguesResourceWithRawResponse:
+        """Get League-related data"""
         from .resources.leagues import AsyncLeaguesResourceWithRawResponse
 
         return AsyncLeaguesResourceWithRawResponse(self._client.leagues)
 
     @cached_property
     def sports(self) -> sports.AsyncSportsResourceWithRawResponse:
+        """Get Sport-related data"""
         from .resources.sports import AsyncSportsResourceWithRawResponse
 
         return AsyncSportsResourceWithRawResponse(self._client.sports)
 
     @cached_property
     def stats(self) -> stats.AsyncStatsResourceWithRawResponse:
+        """Get data on specific Stats"""
         from .resources.stats import AsyncStatsResourceWithRawResponse
 
         return AsyncStatsResourceWithRawResponse(self._client.stats)
 
     @cached_property
     def account(self) -> account.AsyncAccountResourceWithRawResponse:
+        """Get data related to your Account & API key"""
         from .resources.account import AsyncAccountResourceWithRawResponse
 
         return AsyncAccountResourceWithRawResponse(self._client.account)
 
     @cached_property
     def stream(self) -> stream.AsyncStreamResourceWithRawResponse:
+        """Get info about Events (includes odds, results, teams, and other metadata)"""
         from .resources.stream import AsyncStreamResourceWithRawResponse
 
         return AsyncStreamResourceWithRawResponse(self._client.stream)
@@ -637,48 +691,56 @@ class SportsGameOddsWithStreamedResponse:
 
     @cached_property
     def events(self) -> events.EventsResourceWithStreamingResponse:
+        """Get info about Events (includes odds, results, teams, and other metadata)"""
         from .resources.events import EventsResourceWithStreamingResponse
 
         return EventsResourceWithStreamingResponse(self._client.events)
 
     @cached_property
     def teams(self) -> teams.TeamsResourceWithStreamingResponse:
+        """Get Team-related data"""
         from .resources.teams import TeamsResourceWithStreamingResponse
 
         return TeamsResourceWithStreamingResponse(self._client.teams)
 
     @cached_property
     def players(self) -> players.PlayersResourceWithStreamingResponse:
+        """Get Player-related data"""
         from .resources.players import PlayersResourceWithStreamingResponse
 
         return PlayersResourceWithStreamingResponse(self._client.players)
 
     @cached_property
     def leagues(self) -> leagues.LeaguesResourceWithStreamingResponse:
+        """Get League-related data"""
         from .resources.leagues import LeaguesResourceWithStreamingResponse
 
         return LeaguesResourceWithStreamingResponse(self._client.leagues)
 
     @cached_property
     def sports(self) -> sports.SportsResourceWithStreamingResponse:
+        """Get Sport-related data"""
         from .resources.sports import SportsResourceWithStreamingResponse
 
         return SportsResourceWithStreamingResponse(self._client.sports)
 
     @cached_property
     def stats(self) -> stats.StatsResourceWithStreamingResponse:
+        """Get data on specific Stats"""
         from .resources.stats import StatsResourceWithStreamingResponse
 
         return StatsResourceWithStreamingResponse(self._client.stats)
 
     @cached_property
     def account(self) -> account.AccountResourceWithStreamingResponse:
+        """Get data related to your Account & API key"""
         from .resources.account import AccountResourceWithStreamingResponse
 
         return AccountResourceWithStreamingResponse(self._client.account)
 
     @cached_property
     def stream(self) -> stream.StreamResourceWithStreamingResponse:
+        """Get info about Events (includes odds, results, teams, and other metadata)"""
         from .resources.stream import StreamResourceWithStreamingResponse
 
         return StreamResourceWithStreamingResponse(self._client.stream)
@@ -692,48 +754,56 @@ class AsyncSportsGameOddsWithStreamedResponse:
 
     @cached_property
     def events(self) -> events.AsyncEventsResourceWithStreamingResponse:
+        """Get info about Events (includes odds, results, teams, and other metadata)"""
         from .resources.events import AsyncEventsResourceWithStreamingResponse
 
         return AsyncEventsResourceWithStreamingResponse(self._client.events)
 
     @cached_property
     def teams(self) -> teams.AsyncTeamsResourceWithStreamingResponse:
+        """Get Team-related data"""
         from .resources.teams import AsyncTeamsResourceWithStreamingResponse
 
         return AsyncTeamsResourceWithStreamingResponse(self._client.teams)
 
     @cached_property
     def players(self) -> players.AsyncPlayersResourceWithStreamingResponse:
+        """Get Player-related data"""
         from .resources.players import AsyncPlayersResourceWithStreamingResponse
 
         return AsyncPlayersResourceWithStreamingResponse(self._client.players)
 
     @cached_property
     def leagues(self) -> leagues.AsyncLeaguesResourceWithStreamingResponse:
+        """Get League-related data"""
         from .resources.leagues import AsyncLeaguesResourceWithStreamingResponse
 
         return AsyncLeaguesResourceWithStreamingResponse(self._client.leagues)
 
     @cached_property
     def sports(self) -> sports.AsyncSportsResourceWithStreamingResponse:
+        """Get Sport-related data"""
         from .resources.sports import AsyncSportsResourceWithStreamingResponse
 
         return AsyncSportsResourceWithStreamingResponse(self._client.sports)
 
     @cached_property
     def stats(self) -> stats.AsyncStatsResourceWithStreamingResponse:
+        """Get data on specific Stats"""
         from .resources.stats import AsyncStatsResourceWithStreamingResponse
 
         return AsyncStatsResourceWithStreamingResponse(self._client.stats)
 
     @cached_property
     def account(self) -> account.AsyncAccountResourceWithStreamingResponse:
+        """Get data related to your Account & API key"""
         from .resources.account import AsyncAccountResourceWithStreamingResponse
 
         return AsyncAccountResourceWithStreamingResponse(self._client.account)
 
     @cached_property
     def stream(self) -> stream.AsyncStreamResourceWithStreamingResponse:
+        """Get info about Events (includes odds, results, teams, and other metadata)"""
         from .resources.stream import AsyncStreamResourceWithStreamingResponse
 
         return AsyncStreamResourceWithStreamingResponse(self._client.stream)

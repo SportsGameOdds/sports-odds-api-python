@@ -23,6 +23,8 @@ __all__ = ["PlayersResource", "AsyncPlayersResource"]
 
 
 class PlayersResource(SyncAPIResource):
+    """Get Player-related data"""
+
     @cached_property
     def with_raw_response(self) -> PlayersResourceWithRawResponse:
         """
@@ -104,6 +106,8 @@ class PlayersResource(SyncAPIResource):
 
 
 class AsyncPlayersResource(AsyncAPIResource):
+    """Get Player-related data"""
+
     @cached_property
     def with_raw_response(self) -> AsyncPlayersResourceWithRawResponse:
         """
