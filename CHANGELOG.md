@@ -1,5 +1,47 @@
 # Changelog
 
+## 1.2.0 (2026-07-08)
+
+Full Changelog: [v1.1.2...v1.2.0](https://github.com/SportsGameOdds/sports-odds-api-python/compare/v1.1.2...v1.2.0)
+
+### Features
+
+* **client:** add support for binary request streaming ([957fa57](https://github.com/SportsGameOdds/sports-odds-api-python/commit/957fa570a945d29c0ed701273cb2a66f91a5f13d))
+
+
+### Bug Fixes
+
+* compat with Python 3.14 ([26662eb](https://github.com/SportsGameOdds/sports-odds-api-python/commit/26662eb2755d04f9452e908e6ee849174316a4f8))
+* **compat:** update signatures of `model_dump` and `model_dump_json` for Pydantic v1 ([267ab9e](https://github.com/SportsGameOdds/sports-odds-api-python/commit/267ab9efaadbd2c04eb32fadd8f005d8bcd88320))
+* ensure streams are always closed ([34dbbf9](https://github.com/SportsGameOdds/sports-odds-api-python/commit/34dbbf965b51566303019205eeeaa6ace7c9f5c4))
+* **types:** allow pyright to infer TypedDict types within SequenceNotStr ([8413151](https://github.com/SportsGameOdds/sports-odds-api-python/commit/841315114cadef22bd81f38f1ce272b0f04a895d))
+* use async_to_httpx_files in patch method ([405dcb3](https://github.com/SportsGameOdds/sports-odds-api-python/commit/405dcb36386bfe8b844efd818973adbc55503f75))
+
+
+### Chores
+
+* add Python 3.14 classifier and testing ([ad06650](https://github.com/SportsGameOdds/sports-odds-api-python/commit/ad0665097975028fa2ef21f25cfc3606df7b70ae))
+* **ci:** upgrade `actions/github-script` ([8fcde8d](https://github.com/SportsGameOdds/sports-odds-api-python/commit/8fcde8d7ab5d17e94a20828740a41600075574a4))
+* **deps:** mypy 1.18.1 has a regression, pin to 1.17 ([63445c8](https://github.com/SportsGameOdds/sports-odds-api-python/commit/63445c815f942bf20aedf332300f787ff6018203))
+* **docs:** use environment variables for authentication in code snippets ([9105cb3](https://github.com/SportsGameOdds/sports-odds-api-python/commit/9105cb3f988178c2581c16045264eed8df341804))
+* **internal:** add `--fix` argument to lint script ([65658fa](https://github.com/SportsGameOdds/sports-odds-api-python/commit/65658fa131a827154e4321a13447ad428e87fdcd))
+* **internal:** add missing files argument to base client ([b0e9e21](https://github.com/SportsGameOdds/sports-odds-api-python/commit/b0e9e21710675b2b1759a304a56120f6782ad9eb))
+* **internal:** codegen related update ([012d5a4](https://github.com/SportsGameOdds/sports-odds-api-python/commit/012d5a4efcdb0d36780f3290f0535c01b09983b3))
+* **internal:** codegen related update ([1572c08](https://github.com/SportsGameOdds/sports-odds-api-python/commit/1572c085be3b65fced016096e4103a4059ee00c5))
+* **internal:** codegen related update ([6ee8773](https://github.com/SportsGameOdds/sports-odds-api-python/commit/6ee87739301154622858917c2ed76304fd844ebe))
+* **internal:** codegen related update ([0901387](https://github.com/SportsGameOdds/sports-odds-api-python/commit/0901387e0570bf8b37794574349a8aee843ff1b8))
+* **internal:** codegen related update ([a542b8b](https://github.com/SportsGameOdds/sports-odds-api-python/commit/a542b8b9d546235db986383f2836d7b64da2e8db))
+* **internal:** codegen related update ([3201bd4](https://github.com/SportsGameOdds/sports-odds-api-python/commit/3201bd401b0bc74aa00392a61dd4f0cb1b070f98))
+* **internal:** update `actions/checkout` version ([ea3785a](https://github.com/SportsGameOdds/sports-odds-api-python/commit/ea3785a8f7e6c40c50f2900004ee4b5beaf0e203))
+* **package:** drop Python 3.8 support ([1eca400](https://github.com/SportsGameOdds/sports-odds-api-python/commit/1eca400a2f168a8ae03ea3491e6b049dc0c3f367))
+* speedup initial import ([a799a71](https://github.com/SportsGameOdds/sports-odds-api-python/commit/a799a7173689a11304ab74c948b5d841d79ca35b))
+* update lockfile ([e6b26a9](https://github.com/SportsGameOdds/sports-odds-api-python/commit/e6b26a9d279f367799d60b3badc82c3555701246))
+
+
+### Documentation
+
+* prominently feature MCP server setup in root SDK readmes ([55b46dc](https://github.com/SportsGameOdds/sports-odds-api-python/commit/55b46dc684c798525fef55f521ca0e4ece13ad85))
+
 ## 1.1.2 (2025-11-04)
 
 Full Changelog: [v1.1.1...v1.1.2](https://github.com/SportsGameOdds/sports-odds-api-python/compare/v1.1.1...v1.1.2)
