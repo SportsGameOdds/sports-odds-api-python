@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.3.0 (2026-07-18)
+
+Full Changelog: [v1.2.0...v1.3.0](https://github.com/SportsGameOdds/sports-odds-api-python/compare/v1.2.0...v1.3.0)
+
+### Features
+
+* add support for the /markets endpoint ([74744c1](https://github.com/SportsGameOdds/sports-odds-api-python/commit/74744c1bb24019bc51750dceecec21a6d5a2887e))
+* initial stlc build ([af83bed](https://github.com/SportsGameOdds/sports-odds-api-python/commit/af83bedf96e4ce36b6e29306aff5ebeed5b07d57))
+* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([e2518e6](https://github.com/SportsGameOdds/sports-odds-api-python/commit/e2518e625b94fcffcc38687f1fdc7a61cdacf28c))
+
 ## 1.2.0 (2026-07-08)
 
 Full Changelog: [v1.1.2...v1.2.0](https://github.com/SportsGameOdds/sports-odds-api-python/compare/v1.1.2...v1.2.0)
