@@ -13,8 +13,8 @@ class TeamGetParams(TypedDict, total=False):
     cursor: str
     """The cursor for the request.
 
-    Used to get the next group of Teams. This should be the nextCursor from the
-    prior response.
+    Used to get the next group of Teams. This is an opaque token — pass the
+    nextCursor value from the prior response unchanged.
     """
 
     league_id: Annotated[str, PropertyInfo(alias="leagueID")]

@@ -56,8 +56,10 @@ class EventsResource(SyncAPIResource):
         ended: bool | Omit = omit,
         event_id: str | Omit = omit,
         event_ids: str | Omit = omit,
+        expand_results: bool | Omit = omit,
         finalized: bool | Omit = omit,
         include_alt_lines: bool | Omit = omit,
+        include_open_close_odds: bool | Omit = omit,
         include_opposing_odds: bool | Omit = omit,
         league_id: str | Omit = omit,
         limit: float | Omit = omit,
@@ -88,8 +90,8 @@ class EventsResource(SyncAPIResource):
           cancelled: Only include cancelled Events (true), only non-cancelled Events (false) or all
               Events (omit)
 
-          cursor: The cursor for the request. Used to get the next group of Events. This should be
-              the nextCursor from the prior response.
+          cursor: The cursor for the request. Used to get the next group of Events. This is an
+              opaque token — pass the nextCursor value from the prior response unchanged.
 
           ended: Only include Events which have have ended (true), only Events which have not
               ended (false) or all Events (omit)
@@ -98,10 +100,16 @@ class EventsResource(SyncAPIResource):
 
           event_ids: A comma separated list of eventIDs to get Event data for
 
+          expand_results: Whether to expand the results object to include all stat values rather than just
+              the base set
+
           finalized: Only include finalized Events (true), exclude unfinalized Events (false) or all
               Events (omit)
 
           include_alt_lines: Whether to include alternate lines in the odds byBookmaker data
+
+          include_open_close_odds: Whether to include open and close odds values (openOdds, closeOdds, openSpread,
+              closeSpread, openOverUnder, closeOverUnder) in the odds byBookmaker data
 
           include_opposing_odds: Whether to include opposing odds for each included oddID
 
@@ -161,8 +169,10 @@ class EventsResource(SyncAPIResource):
                         "ended": ended,
                         "event_id": event_id,
                         "event_ids": event_ids,
+                        "expand_results": expand_results,
                         "finalized": finalized,
                         "include_alt_lines": include_alt_lines,
+                        "include_open_close_odds": include_open_close_odds,
                         "include_opposing_odds": include_opposing_odds,
                         "league_id": league_id,
                         "limit": limit,
@@ -216,8 +226,10 @@ class AsyncEventsResource(AsyncAPIResource):
         ended: bool | Omit = omit,
         event_id: str | Omit = omit,
         event_ids: str | Omit = omit,
+        expand_results: bool | Omit = omit,
         finalized: bool | Omit = omit,
         include_alt_lines: bool | Omit = omit,
+        include_open_close_odds: bool | Omit = omit,
         include_opposing_odds: bool | Omit = omit,
         league_id: str | Omit = omit,
         limit: float | Omit = omit,
@@ -248,8 +260,8 @@ class AsyncEventsResource(AsyncAPIResource):
           cancelled: Only include cancelled Events (true), only non-cancelled Events (false) or all
               Events (omit)
 
-          cursor: The cursor for the request. Used to get the next group of Events. This should be
-              the nextCursor from the prior response.
+          cursor: The cursor for the request. Used to get the next group of Events. This is an
+              opaque token — pass the nextCursor value from the prior response unchanged.
 
           ended: Only include Events which have have ended (true), only Events which have not
               ended (false) or all Events (omit)
@@ -258,10 +270,16 @@ class AsyncEventsResource(AsyncAPIResource):
 
           event_ids: A comma separated list of eventIDs to get Event data for
 
+          expand_results: Whether to expand the results object to include all stat values rather than just
+              the base set
+
           finalized: Only include finalized Events (true), exclude unfinalized Events (false) or all
               Events (omit)
 
           include_alt_lines: Whether to include alternate lines in the odds byBookmaker data
+
+          include_open_close_odds: Whether to include open and close odds values (openOdds, closeOdds, openSpread,
+              closeSpread, openOverUnder, closeOverUnder) in the odds byBookmaker data
 
           include_opposing_odds: Whether to include opposing odds for each included oddID
 
@@ -321,8 +339,10 @@ class AsyncEventsResource(AsyncAPIResource):
                         "ended": ended,
                         "event_id": event_id,
                         "event_ids": event_ids,
+                        "expand_results": expand_results,
                         "finalized": finalized,
                         "include_alt_lines": include_alt_lines,
+                        "include_open_close_odds": include_open_close_odds,
                         "include_opposing_odds": include_opposing_odds,
                         "league_id": league_id,
                         "limit": limit,

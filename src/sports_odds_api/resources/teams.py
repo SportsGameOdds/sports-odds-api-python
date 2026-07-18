@@ -64,8 +64,8 @@ class TeamsResource(SyncAPIResource):
         Args:
           cursor: The cursor for the request.
 
-        Used to get the next group of Teams. This should be
-              the nextCursor from the prior response.
+        Used to get the next group of Teams. This is an
+              opaque token — pass the nextCursor value from the prior response unchanged.
 
           league_id: A single leagueID or comma-separated list of leagueIDs to get Teams for
 
@@ -148,8 +148,8 @@ class AsyncTeamsResource(AsyncAPIResource):
         Args:
           cursor: The cursor for the request.
 
-        Used to get the next group of Teams. This should be
-              the nextCursor from the prior response.
+        Used to get the next group of Teams. This is an
+              opaque token — pass the nextCursor value from the prior response unchanged.
 
           league_id: A single leagueID or comma-separated list of leagueIDs to get Teams for
 

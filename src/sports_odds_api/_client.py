@@ -35,7 +35,7 @@ from ._base_client import (
 )
 
 if TYPE_CHECKING:
-    from .resources import stats, teams, events, sports, stream, account, leagues, players
+    from .resources import stats, teams, events, sports, stream, account, leagues, markets, players
     from .resources.stats import StatsResource, AsyncStatsResource
     from .resources.teams import TeamsResource, AsyncTeamsResource
     from .resources.events import EventsResource, AsyncEventsResource
@@ -43,6 +43,7 @@ if TYPE_CHECKING:
     from .resources.stream import StreamResource, AsyncStreamResource
     from .resources.account import AccountResource, AsyncAccountResource
     from .resources.leagues import LeaguesResource, AsyncLeaguesResource
+    from .resources.markets import MarketsResource, AsyncMarketsResource
     from .resources.players import PlayersResource, AsyncPlayersResource
 
 __all__ = [
@@ -131,6 +132,13 @@ class SportsGameOdds(SyncAPIClient):
         from .resources.events import EventsResource
 
         return EventsResource(self)
+
+    @cached_property
+    def markets(self) -> MarketsResource:
+        """Get metadata on supported Markets"""
+        from .resources.markets import MarketsResource
+
+        return MarketsResource(self)
 
     @cached_property
     def teams(self) -> TeamsResource:
@@ -383,6 +391,13 @@ class AsyncSportsGameOdds(AsyncAPIClient):
         return AsyncEventsResource(self)
 
     @cached_property
+    def markets(self) -> AsyncMarketsResource:
+        """Get metadata on supported Markets"""
+        from .resources.markets import AsyncMarketsResource
+
+        return AsyncMarketsResource(self)
+
+    @cached_property
     def teams(self) -> AsyncTeamsResource:
         """Get Team-related data"""
         from .resources.teams import AsyncTeamsResource
@@ -571,6 +586,13 @@ class SportsGameOddsWithRawResponse:
         return EventsResourceWithRawResponse(self._client.events)
 
     @cached_property
+    def markets(self) -> markets.MarketsResourceWithRawResponse:
+        """Get metadata on supported Markets"""
+        from .resources.markets import MarketsResourceWithRawResponse
+
+        return MarketsResourceWithRawResponse(self._client.markets)
+
+    @cached_property
     def teams(self) -> teams.TeamsResourceWithRawResponse:
         """Get Team-related data"""
         from .resources.teams import TeamsResourceWithRawResponse
@@ -632,6 +654,13 @@ class AsyncSportsGameOddsWithRawResponse:
         from .resources.events import AsyncEventsResourceWithRawResponse
 
         return AsyncEventsResourceWithRawResponse(self._client.events)
+
+    @cached_property
+    def markets(self) -> markets.AsyncMarketsResourceWithRawResponse:
+        """Get metadata on supported Markets"""
+        from .resources.markets import AsyncMarketsResourceWithRawResponse
+
+        return AsyncMarketsResourceWithRawResponse(self._client.markets)
 
     @cached_property
     def teams(self) -> teams.AsyncTeamsResourceWithRawResponse:
@@ -697,6 +726,13 @@ class SportsGameOddsWithStreamedResponse:
         return EventsResourceWithStreamingResponse(self._client.events)
 
     @cached_property
+    def markets(self) -> markets.MarketsResourceWithStreamingResponse:
+        """Get metadata on supported Markets"""
+        from .resources.markets import MarketsResourceWithStreamingResponse
+
+        return MarketsResourceWithStreamingResponse(self._client.markets)
+
+    @cached_property
     def teams(self) -> teams.TeamsResourceWithStreamingResponse:
         """Get Team-related data"""
         from .resources.teams import TeamsResourceWithStreamingResponse
@@ -758,6 +794,13 @@ class AsyncSportsGameOddsWithStreamedResponse:
         from .resources.events import AsyncEventsResourceWithStreamingResponse
 
         return AsyncEventsResourceWithStreamingResponse(self._client.events)
+
+    @cached_property
+    def markets(self) -> markets.AsyncMarketsResourceWithStreamingResponse:
+        """Get metadata on supported Markets"""
+        from .resources.markets import AsyncMarketsResourceWithStreamingResponse
+
+        return AsyncMarketsResourceWithStreamingResponse(self._client.markets)
 
     @cached_property
     def teams(self) -> teams.AsyncTeamsResourceWithStreamingResponse:

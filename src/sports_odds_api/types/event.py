@@ -2,6 +2,7 @@
 
 from typing import Dict, List, Optional
 from datetime import datetime
+from typing_extensions import Literal
 
 from pydantic import Field as FieldInfo
 
@@ -11,6 +12,9 @@ __all__ = [
     "Event",
     "Activity",
     "Info",
+    "InfoBroadcast",
+    "InfoReferee",
+    "InfoVenue",
     "Odds",
     "OddsByBookmaker",
     "Players",
@@ -32,8 +36,44 @@ class Activity(BaseModel):
     score: Optional[float] = None
 
 
+class InfoBroadcast(BaseModel):
+    broadcaster_id: Optional[str] = FieldInfo(alias="broadcasterID", default=None)
+
+    name: Optional[str] = None
+
+    type: Optional[Literal["tv", "webstream", "subscription", "sportsbook"]] = None
+
+
+class InfoReferee(BaseModel):
+    name: Optional[str] = None
+
+
+class InfoVenue(BaseModel):
+    address: Optional[str] = None
+
+    capacity: Optional[float] = None
+
+    city: Optional[str] = None
+
+    country_code: Optional[str] = FieldInfo(alias="countryCode", default=None)
+
+    country_name: Optional[str] = FieldInfo(alias="countryName", default=None)
+
+    name: Optional[str] = None
+
+    region_code: Optional[str] = FieldInfo(alias="regionCode", default=None)
+
+    region_name: Optional[str] = FieldInfo(alias="regionName", default=None)
+
+
 class Info(BaseModel):
+    broadcasts: Optional[List[InfoBroadcast]] = None
+
+    referee: Optional[InfoReferee] = None
+
     season_week: Optional[str] = FieldInfo(alias="seasonWeek", default=None)
+
+    venue: Optional[InfoVenue] = None
 
 
 class OddsByBookmaker(BaseModel):
@@ -41,11 +81,23 @@ class OddsByBookmaker(BaseModel):
 
     bookmaker_id: Optional[str] = FieldInfo(alias="bookmakerID", default=None)
 
+    close_odds: Optional[str] = FieldInfo(alias="closeOdds", default=None)
+
+    close_over_under: Optional[str] = FieldInfo(alias="closeOverUnder", default=None)
+
+    close_spread: Optional[str] = FieldInfo(alias="closeSpread", default=None)
+
     is_main_line: Optional[bool] = FieldInfo(alias="isMainLine", default=None)
 
     last_updated_at: Optional[datetime] = FieldInfo(alias="lastUpdatedAt", default=None)
 
     odds: Optional[str] = None
+
+    open_odds: Optional[str] = FieldInfo(alias="openOdds", default=None)
+
+    open_over_under: Optional[str] = FieldInfo(alias="openOverUnder", default=None)
+
+    open_spread: Optional[str] = FieldInfo(alias="openSpread", default=None)
 
     over_under: Optional[str] = FieldInfo(alias="overUnder", default=None)
 
@@ -112,6 +164,10 @@ class Players(BaseModel):
     photo: Optional[str] = None
 
     player_id: Optional[str] = FieldInfo(alias="playerID", default=None)
+
+    status: Optional[Literal["ir", "active", "out", "suspended", "questionable", "doubtful", "probable"]] = None
+
+    status_details: Optional[str] = FieldInfo(alias="statusDetails", default=None)
 
     team_id: Optional[str] = FieldInfo(alias="teamID", default=None)
 
@@ -244,6 +300,7 @@ class Event(BaseModel):
     players: Optional[Dict[str, Players]] = None
 
     results: Optional[Dict[str, Dict[str, Dict[str, float]]]] = None
+    """Nested results in the format `{periodID}.{statEntityID}.{statID} → number`."""
 
     sport_id: Optional[str] = FieldInfo(alias="sportID", default=None)
 

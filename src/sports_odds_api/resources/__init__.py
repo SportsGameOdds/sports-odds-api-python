@@ -56,6 +56,14 @@ from .leagues import (
     LeaguesResourceWithStreamingResponse,
     AsyncLeaguesResourceWithStreamingResponse,
 )
+from .markets import (
+    MarketsResource,
+    AsyncMarketsResource,
+    MarketsResourceWithRawResponse,
+    AsyncMarketsResourceWithRawResponse,
+    MarketsResourceWithStreamingResponse,
+    AsyncMarketsResourceWithStreamingResponse,
+)
 from .players import (
     PlayersResource,
     AsyncPlayersResource,
@@ -72,6 +80,12 @@ __all__ = [
     "AsyncEventsResourceWithRawResponse",
     "EventsResourceWithStreamingResponse",
     "AsyncEventsResourceWithStreamingResponse",
+    "MarketsResource",
+    "AsyncMarketsResource",
+    "MarketsResourceWithRawResponse",
+    "AsyncMarketsResourceWithRawResponse",
+    "MarketsResourceWithStreamingResponse",
+    "AsyncMarketsResourceWithStreamingResponse",
     "TeamsResource",
     "AsyncTeamsResource",
     "TeamsResourceWithRawResponse",

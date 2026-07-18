@@ -63,8 +63,8 @@ class PlayersResource(SyncAPIResource):
         Get a list of Players for a specific Team or Event
 
         Args:
-          cursor: The cursor for the request. Used to get the next group of Players. This should
-              be the nextCursor from the prior response.
+          cursor: The cursor for the request. Used to get the next group of Players. This is an
+              opaque token — pass the nextCursor value from the prior response unchanged.
 
           event_id: EventID to get Players data for
 
@@ -146,8 +146,8 @@ class AsyncPlayersResource(AsyncAPIResource):
         Get a list of Players for a specific Team or Event
 
         Args:
-          cursor: The cursor for the request. Used to get the next group of Players. This should
-              be the nextCursor from the prior response.
+          cursor: The cursor for the request. Used to get the next group of Players. This is an
+              opaque token — pass the nextCursor value from the prior response unchanged.
 
           event_id: EventID to get Players data for
 
