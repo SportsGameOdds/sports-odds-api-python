@@ -24,8 +24,8 @@ class EventGetParams(TypedDict, total=False):
     cursor: str
     """The cursor for the request.
 
-    Used to get the next group of Events. This should be the nextCursor from the
-    prior response.
+    Used to get the next group of Events. This is an opaque token — pass the
+    nextCursor value from the prior response unchanged.
     """
 
     ended: bool
@@ -40,6 +40,12 @@ class EventGetParams(TypedDict, total=False):
     event_ids: Annotated[str, PropertyInfo(alias="eventIDs")]
     """A comma separated list of eventIDs to get Event data for"""
 
+    expand_results: Annotated[bool, PropertyInfo(alias="expandResults")]
+    """
+    Whether to expand the results object to include all stat values rather than just
+    the base set
+    """
+
     finalized: bool
     """
     Only include finalized Events (true), exclude unfinalized Events (false) or all
@@ -48,6 +54,12 @@ class EventGetParams(TypedDict, total=False):
 
     include_alt_lines: Annotated[bool, PropertyInfo(alias="includeAltLines")]
     """Whether to include alternate lines in the odds byBookmaker data"""
+
+    include_open_close_odds: Annotated[bool, PropertyInfo(alias="includeOpenCloseOdds")]
+    """
+    Whether to include open and close odds values (openOdds, closeOdds, openSpread,
+    closeSpread, openOverUnder, closeOverUnder) in the odds byBookmaker data
+    """
 
     include_opposing_odds: Annotated[bool, PropertyInfo(alias="includeOpposingOdds")]
     """Whether to include opposing odds for each included oddID"""

@@ -13,8 +13,8 @@ class PlayerGetParams(TypedDict, total=False):
     cursor: str
     """The cursor for the request.
 
-    Used to get the next group of Players. This should be the nextCursor from the
-    prior response.
+    Used to get the next group of Players. This is an opaque token — pass the
+    nextCursor value from the prior response unchanged.
     """
 
     event_id: Annotated[str, PropertyInfo(alias="eventID")]

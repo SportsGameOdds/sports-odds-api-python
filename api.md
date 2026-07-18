@@ -10,6 +10,18 @@ Methods:
 
 - <code title="get /events/">client.events.<a href="./src/sports_odds_api/resources/events.py">get</a>(\*\*<a href="src/sports_odds_api/types/event_get_params.py">params</a>) -> <a href="./src/sports_odds_api/types/event.py">SyncNextCursorPage[Event]</a></code>
 
+# Markets
+
+Types:
+
+```python
+from sports_odds_api.types import Market
+```
+
+Methods:
+
+- <code title="get /markets/">client.markets.<a href="./src/sports_odds_api/resources/markets.py">get</a>(\*\*<a href="src/sports_odds_api/types/market_get_params.py">params</a>) -> <a href="./src/sports_odds_api/types/market.py">SyncNextCursorPage[Market]</a></code>
+
 # Teams
 
 Types:

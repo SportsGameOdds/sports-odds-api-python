@@ -7,12 +7,14 @@ from .team import Team as Team
 from .event import Event as Event
 from .sport import Sport as Sport
 from .league import League as League
+from .market import Market as Market
 from .player import Player as Player
 from .account_usage import AccountUsage as AccountUsage
 from .stat_get_params import StatGetParams as StatGetParams
 from .team_get_params import TeamGetParams as TeamGetParams
 from .event_get_params import EventGetParams as EventGetParams
 from .league_get_params import LeagueGetParams as LeagueGetParams
+from .market_get_params import MarketGetParams as MarketGetParams
 from .player_get_params import PlayerGetParams as PlayerGetParams
 from .stat_get_response import StatGetResponse as StatGetResponse
 from .sport_get_response import SportGetResponse as SportGetResponse
