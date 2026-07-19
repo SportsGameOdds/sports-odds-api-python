@@ -11,6 +11,7 @@ This example demonstrates:
 """
 
 import os
+from typing import Any, Dict, List
 
 from sports_odds_api import SportsGameOdds
 
@@ -50,24 +51,30 @@ print(f"Found {len(page.data)} NFL events with odds\n")
 
 # Parse all odds markets into a map
 # Structure: { eventID: { betTypeID: [markets] } }
-odds_map = {}
+odds_map: Dict[str, Dict[str, List[Any]]] = {}
 
 for event in page.data:
     event_id = event.event_id
+    if not event_id:
+        continue
     odds_map[event_id] = {}
 
     print(f"Event: {event_id}")
-    print(f"  {event.teams.away.names.long} @ {event.teams.home.names.long}")
+    teams = event.teams
+    away_names = teams.away.names if teams and teams.away else None
+    home_names = teams.home.names if teams and teams.home else None
+    if away_names and home_names:
+        print(f"  {away_names.long} @ {home_names.long}")
 
     # Check if odds exist
-    if not hasattr(event, 'odds') or not event.odds:
+    if not event.odds:
         print("  No odds markets available\n")
         continue
 
     # Group odds by betTypeID
     # IMPORTANT: event.odds is a dict/object keyed by oddID, NOT a list!
     for _odd_id, odd in event.odds.items():
-        bet_type_id = odd.bet_type_id
+        bet_type_id = odd.bet_type_id or "unknown"
         if bet_type_id not in odds_map[event_id]:
             odds_map[event_id][bet_type_id] = []
         odds_map[event_id][bet_type_id].append(odd)

@@ -19,6 +19,7 @@ import sys
 import time
 import signal
 import traceback
+from typing import Any, Dict, List
 from datetime import datetime
 
 # Third-Party Imports
@@ -26,6 +27,7 @@ import pusher
 
 import sports_odds_api
 from sports_odds_api import SportsGameOdds
+from sports_odds_api.types import Event
 
 # Get your API key from https://sportsgameodds.com/pricing
 # Note: Streaming requires an AllStar plan subscription
@@ -47,11 +49,11 @@ print("Sports Odds API Python SDK - Streaming Example")
 print("Note: Streaming requires an AllStar plan subscription\n")
 
 # Global state for events
-events = {}
+events: Dict[str, Event] = {}
 pusher_client = None
 
 
-def handle_shutdown(_signum, _frame):
+def handle_shutdown(_signum: int, _frame: Any) -> None:
     """Handle graceful shutdown on Ctrl+C"""
     print("\n\nDisconnecting...")
     if pusher_client:
@@ -69,16 +71,14 @@ try:
     print("=== Setting up Event Stream ===")
     print(f"Feed: {STREAM_FEED}\n")
 
-    # Initialize events dictionary
-    events = {}
-
     # Call this endpoint to get initial data and connection parameters
     print("Fetching stream info and initial data...")
     stream_info = client.stream.events(feed=STREAM_FEED)
 
     # Seed initial data
-    for event in stream_info.data:
-        events[event.event_id] = event
+    for event in stream_info.data or []:
+        if event.event_id:
+            events[event.event_id] = event
 
     print(f"✓ Loaded {len(events)} initial events")
     print("✓ Connecting to WebSocket...")
@@ -93,7 +93,7 @@ try:
     channel = pusher_client.subscribe(stream_info.channel)
 
     # Bind to the 'data' event
-    def handle_event(changed_events):
+    def handle_event(changed_events: List[Dict[str, Any]]) -> None:
         """Handle incoming event updates"""
         print(
             f"\n[{datetime.now().strftime('%H:%M:%S')}] Received update for {len(changed_events)} event(s)"
@@ -103,16 +103,22 @@ try:
         event_ids = ",".join([e["eventID"] for e in changed_events])
 
         # Get the full event data for the changed events
-        updated_page = client.events.get(event_i_ds=event_ids)
+        updated_page = client.events.get(event_ids=event_ids)
 
         for event in updated_page.data:
+            if not event.event_id:
+                continue
+
             # Update our data with the full event data
             events[event.event_id] = event
 
             print(f"  Updated: {event.event_id}")
-            if hasattr(event, "teams") and hasattr(event.teams, "away") and hasattr(event.teams.away, "names"):
-                away_name = getattr(event.teams.away.names, "long", None)
-                home_name = getattr(event.teams.home.names, "long", None)
+            teams = event.teams
+            away = teams.away if teams else None
+            home = teams.home if teams else None
+            if away and home:
+                away_name = getattr(away.names, "long", None)
+                home_name = getattr(home.names, "long", None)
                 if away_name and home_name:
                     print(f"    {away_name} @ {home_name}")
 

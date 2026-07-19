@@ -209,6 +209,12 @@ module = "black.files.*"
 ignore_errors = true
 ignore_missing_imports = true
 
+# pusher is an examples-only dependency (examples/streaming.py) and isn't
+# part of the package's dependencies.
+[[tool.mypy.overrides]]
+module = "pusher.*"
+ignore_missing_imports = true
+
 
 [tool.ruff]
 line-length = 120

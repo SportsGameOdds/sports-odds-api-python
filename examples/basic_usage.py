@@ -60,7 +60,7 @@ print(f"Processed {count} events across multiple pages")
 # Example 3: Error handling
 print("\n=== Error Handling Example ===")
 try:
-    client.events.get(eventIDs="invalid-id")
+    client.events.get(event_ids="invalid-id")
 except sports_odds_api.NotFoundError as e:
     print(f"Caught NotFoundError: {e.message}")
 except sports_odds_api.APIError as e:
