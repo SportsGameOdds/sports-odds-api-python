@@ -76,6 +76,8 @@ class Venue(BaseModel):
 
 
 class Team(BaseModel):
+    aliases: Optional[List[str]] = None
+
     coach: Optional[Coach] = None
 
     colors: Optional[Colors] = None

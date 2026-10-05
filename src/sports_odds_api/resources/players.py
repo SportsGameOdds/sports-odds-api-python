@@ -68,7 +68,8 @@ class PlayersResource(SyncAPIResource):
 
           limit: The maximum number of Players to return
 
-          player_id: PlayerID to get data for
+          player_id: PlayerID to get data for. If a playerID has since changed, the Player which
+              lists it in its aliases is returned
 
           team_id: TeamID to get Players data for
 
@@ -149,7 +150,8 @@ class AsyncPlayersResource(AsyncAPIResource):
 
           limit: The maximum number of Players to return
 
-          player_id: PlayerID to get data for
+          player_id: PlayerID to get data for. If a playerID has since changed, the Player which
+              lists it in its aliases is returned
 
           team_id: TeamID to get Players data for
 

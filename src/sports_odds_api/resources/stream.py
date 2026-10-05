@@ -58,7 +58,8 @@ class StreamResource(SyncAPIResource):
         Setup streamed (WebSocket) connection
 
         Args:
-          event_id: An eventID to stream events for
+          event_id: An eventID to stream events for. If the eventID has since changed, the Event
+              which lists it in its aliases is streamed
 
           feed: The feed you would like to subscribe to
 
@@ -129,7 +130,8 @@ class AsyncStreamResource(AsyncAPIResource):
         Setup streamed (WebSocket) connection
 
         Args:
-          event_id: An eventID to stream events for
+          event_id: An eventID to stream events for. If the eventID has since changed, the Event
+              which lists it in its aliases is streamed
 
           feed: The feed you would like to subscribe to
 

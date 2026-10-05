@@ -24,7 +24,11 @@ class PlayerGetParams(TypedDict, total=False):
     """The maximum number of Players to return"""
 
     player_id: Annotated[str, PropertyInfo(alias="playerID")]
-    """PlayerID to get data for"""
+    """PlayerID to get data for.
+
+    If a playerID has since changed, the Player which lists it in its aliases is
+    returned
+    """
 
     team_id: Annotated[str, PropertyInfo(alias="teamID")]
     """TeamID to get Players data for"""

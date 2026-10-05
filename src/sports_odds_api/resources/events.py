@@ -94,9 +94,11 @@ class EventsResource(SyncAPIResource):
           ended: Only include Events which have have ended (true), only Events which have not
               ended (false) or all Events (omit)
 
-          event_id: An eventID to get Event data for
+          event_id: An eventID to get Event data for. If an eventID has since changed, the Event
+              which lists it in its aliases is returned
 
-          event_ids: A comma separated list of eventIDs to get Event data for
+          event_ids: A comma separated list of eventIDs to get Event data for. If an eventID has
+              since changed, the Event which lists it in its aliases is returned
 
           expand_results: Whether to expand the results object to include all stat values rather than just
               the base set
@@ -262,9 +264,11 @@ class AsyncEventsResource(AsyncAPIResource):
           ended: Only include Events which have have ended (true), only Events which have not
               ended (false) or all Events (omit)
 
-          event_id: An eventID to get Event data for
+          event_id: An eventID to get Event data for. If an eventID has since changed, the Event
+              which lists it in its aliases is returned
 
-          event_ids: A comma separated list of eventIDs to get Event data for
+          event_ids: A comma separated list of eventIDs to get Event data for. If an eventID has
+              since changed, the Event which lists it in its aliases is returned
 
           expand_results: Whether to expand the results object to include all stat values rather than just
               the base set
