@@ -287,6 +287,8 @@ class Teams(BaseModel):
 class Event(BaseModel):
     activity: Optional[Activity] = None
 
+    aliases: Optional[List[str]] = None
+
     event_id: Optional[str] = FieldInfo(alias="eventID", default=None)
 
     info: Optional[Info] = None

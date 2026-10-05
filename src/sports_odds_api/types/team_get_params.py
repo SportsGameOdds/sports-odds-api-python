@@ -27,4 +27,8 @@ class TeamGetParams(TypedDict, total=False):
     """A single sportID or comma-separated list of sportIDs to get Teams for"""
 
     team_id: Annotated[str, PropertyInfo(alias="teamID")]
-    """A single teamID or comma-separated list of teamIDs to get data for"""
+    """A single teamID or comma-separated list of teamIDs to get data for.
+
+    If a teamID has since changed, the Team which lists it in its aliases is
+    returned
+    """
