@@ -11,7 +11,11 @@ __all__ = ["StreamEventsParams"]
 
 class StreamEventsParams(TypedDict, total=False):
     event_id: Annotated[str, PropertyInfo(alias="eventID")]
-    """An eventID to stream events for"""
+    """An eventID to stream events for.
+
+    If the eventID has since changed, the Event which lists it in its aliases is
+    streamed
+    """
 
     feed: str
     """The feed you would like to subscribe to"""

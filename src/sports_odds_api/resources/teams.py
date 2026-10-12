@@ -73,7 +73,8 @@ class TeamsResource(SyncAPIResource):
 
           sport_id: A single sportID or comma-separated list of sportIDs to get Teams for
 
-          team_id: A single teamID or comma-separated list of teamIDs to get data for
+          team_id: A single teamID or comma-separated list of teamIDs to get data for. If a teamID
+              has since changed, the Team which lists it in its aliases is returned
 
           extra_headers: Send extra headers
 
@@ -157,7 +158,8 @@ class AsyncTeamsResource(AsyncAPIResource):
 
           sport_id: A single sportID or comma-separated list of sportIDs to get Teams for
 
-          team_id: A single teamID or comma-separated list of teamIDs to get data for
+          team_id: A single teamID or comma-separated list of teamIDs to get data for. If a teamID
+              has since changed, the Team which lists it in its aliases is returned
 
           extra_headers: Send extra headers
 
