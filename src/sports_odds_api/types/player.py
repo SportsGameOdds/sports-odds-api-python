@@ -24,6 +24,10 @@ class Names(BaseModel):
 
     last_name: Optional[str] = FieldInfo(alias="lastName", default=None)
 
+    nickname: Optional[str] = None
+
+    suffix: Optional[str] = None
+
 
 class PlayerTeams(BaseModel):
     team_id: Optional[str] = FieldInfo(alias="teamID", default=None)
@@ -32,7 +36,7 @@ class PlayerTeams(BaseModel):
 class Player(BaseModel):
     aliases: Optional[List[str]] = None
 
-    jersey_number: Optional[float] = FieldInfo(alias="jerseyNumber", default=None)
+    jersey_number: Optional[str] = FieldInfo(alias="jerseyNumber", default=None)
 
     league_id: Optional[str] = FieldInfo(alias="leagueID", default=None)
 
