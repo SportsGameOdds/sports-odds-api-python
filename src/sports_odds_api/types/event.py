@@ -65,6 +65,8 @@ class InfoVenue(BaseModel):
 
     region_name: Optional[str] = FieldInfo(alias="regionName", default=None)
 
+    venue_id: Optional[str] = FieldInfo(alias="venueID", default=None)
+
 
 class Info(BaseModel):
     broadcasts: Optional[List[InfoBroadcast]] = None

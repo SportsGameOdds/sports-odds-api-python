@@ -28,11 +28,21 @@ class Lookups(BaseModel):
 
 
 class Names(BaseModel):
+    first_name: Optional[str] = FieldInfo(alias="firstName", default=None)
+
+    last_name: Optional[str] = FieldInfo(alias="lastName", default=None)
+
+    location: Optional[str] = None
+
     long: Optional[str] = None
 
     medium: Optional[str] = None
 
+    nickname: Optional[str] = None
+
     short: Optional[str] = None
+
+    suffix: Optional[str] = None
 
 
 class Owner(BaseModel):
@@ -73,6 +83,8 @@ class Venue(BaseModel):
     region_code: Optional[str] = FieldInfo(alias="regionCode", default=None)
 
     region_name: Optional[str] = FieldInfo(alias="regionName", default=None)
+
+    venue_id: Optional[str] = FieldInfo(alias="venueID", default=None)
 
 
 class Team(BaseModel):
